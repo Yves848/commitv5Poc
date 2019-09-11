@@ -3,6 +3,7 @@
     grid-template-columns: repeat(8, 1fr);
     grid-auto-rows: minmax(50px, auto);
     grid-template-areas: "toolbar toolbar toolbar toolbar toolbar toolbar toolbar toolbar " "aside aside aside outlet outlet outlet outlet outlet" "aside aside aside outlet outlet outlet outlet outlet" "aside aside aside outlet outlet outlet outlet outlet" "aside aside aside outlet outlet outlet outlet outlet";
+    margin: 0 auto;
 }
 
 #toolbar {
