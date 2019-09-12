@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ElectronService } from 'ngx-electron';
+
+import { FilesService } from './../../services/files.service';
 
 @Component({
   selector: 'app-test',
@@ -7,21 +8,22 @@ import { ElectronService } from 'ngx-electron';
   styleUrls: ['./test.component.scss'],
 })
 export class TestComponent implements OnInit {
-  constructor(private els: ElectronService) {}
+  constructor(private fileService: FilesService) {}
+  files = [];
+  sPath = 'c:\\';
 
   ngOnInit() {
     console.log('nginit');
-    this.els.ipcRenderer.send('init-fichier');
-    this.els.ipcRenderer.on('listfiles-reply', (event, data) => {
-      console.log(data);
-    });
   }
 
   sendMsg() {
-    this.els.ipcRenderer.send('listfiles', { data: 'test' });
+    this.files = [];
+    this.fileService.listfiles(this.sPath).subscribe(result => {
+      this.files = result;
+    });
   }
 
   bell() {
-    this.els.shell.beep();
+    //this.els.shell.beep();
   }
 }

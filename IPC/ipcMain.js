@@ -7,10 +7,10 @@ ipcMain.on('init-fichier', (event, data) => {
 })
 
 ipcMain.on('listfiles', (event, data) => {
-  _console('IPCMain [message]', event, data);
-  const files = fs.readdirSync('c:\\');
+  _console('IPCMain [message]', data);
+  const files = fs.readdirSync(data.path);
   _console(files);
-  event.reply('listfiles-reply', files);
+  event.returnValue = files;
 })
 
 
