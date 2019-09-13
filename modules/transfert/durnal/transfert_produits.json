@@ -1,0 +1,240 @@
+[
+    {
+        "id" : "durnal_suppliers",
+        "libelle" : "Fournisseurs Durnal",
+        "methode" : "GET",
+        "url" : "/durnal-achats/v1/imports/recover/supplier",
+        "parametresURL" : [
+            { "pharmacyId" : "{tenantId}" }
+        ],
+        "methodeTransformation" : "transformations.transformerFournisseur",
+        "procedureSelection" : "",
+        "procedureCorrespondance" : "pk_durnal.creer_correspondance_frn_durnal"
+    },
+    {
+        "id" : "suppliers",
+        "libelle" : "Fournisseurs",
+        "methode" : "PUT",
+        "url" : "/durnal-achats/v1/imports/recover/partner",
+        "parametresURL" : [
+            { "pharmacyId" : "{tenantId}" }
+        ],
+        "template" :
+            {
+                "o2Id": "string",
+                "agency": {
+                "address": "string",
+                "address2": "string",
+                "agencyName": "string",
+                "city": "string",
+                "cityId": "string",
+                "id": "string",
+                "phoneNumber": "string",
+                "postalBox": "string"
+                },
+                "isDefaultDistributor": true,
+                "logo": "string",
+                "name": "string",
+                "prefered": true,
+                "remarques": "string",
+                "representatives": [
+                {
+                    "contactFullname": "string",
+                    "email": "string",
+                    "homePhoneNumber": "string",
+                    "id": "string",
+                    "mobilePhoneNumber": "string"
+                }
+                ],
+                "supplierId": "string",
+                "supplierType": "GROSSISTE",
+                "transmissionType": "MANUAL",
+                "website": "string"
+            },
+        "methodeTransformation" : "",
+        "procedureSelection" : "pk_durnal.fournisseur",
+        "procedureCorrespondance" : "pk_durnal.creer_correspondance_frn",
+        "tailleQueue" : 10,
+        "taillePaquet" : 1
+    },
+    {
+        "id" : "products",
+        "libelle" : "Produits",
+        "methode" : "POST",
+        "url" : "/durnal-products/v2/products/bulkInsert",
+        "parametresURL" : [
+            { "tenantId" : "{tenantId}" }
+        ],
+        "template" :
+            {
+                "idProduit": "string",
+                "numeroBaseReference": 0,
+                "codesProduits": [
+                    {
+                        "codeProduit": "string",
+                        "typeCode": 0
+                    }
+                ],
+                "deleted": true,
+                "designations": [
+                    {
+                        "designation": "string",
+                        "langue": "string"
+                    }
+                ],
+                "baseRemboursement": 0,
+                "prixVente": 0,
+                "prixAchatCatalogue": 0,
+                "pamp": 0,
+                "tauxTva": 0,
+                "codeCategorieRemboursement": "string",
+                "typeProduit": "string",
+                "liste": "string",
+                "prixReferenceCNS": 0,
+                "tauxRemboursement": 0
+            },
+        "procedureSelection" : "pk_durnal.produit",
+        "procedureCorrespondance" : "pk_durnal.creer_correspondance_produit",
+        "tailleQueue" : 10,
+        "taillePaquet" : 43
+    },
+    {
+        "id" : "warehouses",
+        "libelle" : "Depôts",
+        "methode" : "POST",
+        "url" : "/durnal-stocks/v2/warehouse/bulkInsert",
+        "parametresURL" : [
+            { "tenantId" : "{tenantId}" }
+        ],
+        "template" :
+            {
+                "idDepot" : null,
+                "nom" : "string",
+                "robot" : true
+            },
+        "procedureSelection" : "pk_durnal.depot",
+        "procedureCorrespondance" : "pk_durnal.creer_correspondance_depot",
+        "tailleQueue" : 10,
+        "taillePaquet" : 43
+    },
+    {
+        "id" : "stock",
+        "libelle" : "Stocks",
+        "methode" : "POST",
+        "url" : "/durnal-stocks/v2/stocks/bulkInsert",
+        "parametresURL" : [
+            { "tenantId" : "{tenantId}" }
+        ],
+        "template" :
+            {
+                "idProduit": "string",
+                "codeProduit": "string",
+                "designation": "string",
+                "stocks": [
+                    {
+                        "automate": true,
+                        "idDepot": "string",
+                        "quantite": 0,
+                        "stockMaxi": 0,
+                        "stockMini": 0,
+                        "zonegeographique": [
+                            {
+                                "code": "string",
+                                "libelle": "string"
+                            }
+                        ]
+                    }
+                ],
+                "borneMini": 0,
+                "borneMaxi": 0,
+                "derniereVente": "2019-06-20T10:25:59.766Z",
+                "idProduitACommander": "string",
+                "unitesStupefiant": 0,
+                "stupefiant": true
+            },
+        "procedureSelection" : "pk_durnal.stock",
+        "procedureCorrespondance" : "",
+        "tailleQueue" : 10,
+        "taillePaquet" : 43
+    },
+    {
+        "id" : "drugs",
+        "libelle" : "Stupéfiants",
+        "methode" : "POST",
+        "url" : "/durnal-products/v2/products/bulkStups",
+        "parametresURL" : [
+            { "tenantId" : "{tenantId}" }
+        ],
+        "template" :
+            {
+                "idProduit"    : "string",
+                "unitesStupefiant" : 0,
+                "idProduitACommander" : "string",
+                "idProduitUnitaire" : "string"
+            },
+        "procedureSelection" : "pk_durnal.stupefiant",
+        "procedureCorrespondance" : "",
+        "tailleQueue" : 10,
+        "taillePaquet" : 43
+    },
+    {
+        "id" : "cns",
+        "libelle" : "Informations CNS",
+        "methode" : "POST",
+        "url" : "/durnal-products/v2/products/bulkCns",
+        "parametresURL" : [
+            { "tenantId" : "{tenantId}" }
+        ],
+        "template" :
+            {
+                "idProduit": "string",
+                "idProduitAssocie": "string",
+                "quantite": 0
+            },
+        "procedureSelection" : "pk_durnal.produit_cns",
+        "procedureCorrespondance" : "",
+        "tailleQueue" : 10,
+        "taillePaquet" : 43
+    },
+    {
+        "id" : "catalogs",
+        "libelle" : "Catalogues représentants",
+        "methode" : "POST",
+        "url" : "/durnal-achats/v1/imports/recover/catalog",
+        "template" :
+            {
+                "o2Id": "string",
+                "pharmacyId": "0",
+                "productCode": 0,
+                "productId": "string",
+                "productName": "string",
+                "productPrice": 0,
+                "supplierId": "string"
+            },
+        "procedureSelection" : "pk_durnal.catalogue",
+        "procedureCorrespondance" : "",
+        "tailleQueue" : 10,
+        "taillePaquet" : 43
+    },
+    {
+        "id" : "excl_wholesalers",
+        "libelle" : "Grossistes exclusifs",
+        "methode" : "POST",
+        "url" : "/durnal-achats/v1/imports/recover/exclusive",
+        "template" :
+            {
+                "o2Id": "string",
+                "pharmacyId": "0",
+                "productCode": 0,
+                "productId": "string",
+                "productName": "string",
+                "productPrice": 0,
+                "supplierId": "string",
+                "typeCode" : 0
+            },
+        "procedureSelection" : "pk_durnal.grossiste_exclusif",
+        "procedureCorrespondance" : "",
+        "tailleQueue" : 10,
+        "taillePaquet" : 43
+    }
+]

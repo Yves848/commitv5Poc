@@ -1,0 +1,15 @@
+#menu-btn {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(50px, auto);
+
+}
+
+.btn {
+  padding: 5px;
+  margin: 5px;
+
+  &:hover {
+    background-color: blue;
+  }
+}
