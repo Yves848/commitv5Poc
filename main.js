@@ -4,13 +4,13 @@ var electron_1 = require("electron");
 var path = require("path");
 var url = require("url");
 var ipcMain_1 = require("./src/IPC/ipcMain");
-//const url = require("url");
-//const path = require("path");
-var mainWindow, serve;
+var ipcProject_1 = require("./src/IPC/ipcProject");
+var mainWindow;
+var serve;
 var ipcFiles;
+var ipcProjects;
 var args = process.argv.slice(1);
 serve = args.some(function (val) { return val === '--serve'; });
-//require('./src/IPC/ipcMain');
 function createWindow() {
     mainWindow = new electron_1.BrowserWindow({
         width: 800,
@@ -18,9 +18,12 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true,
         },
+        darkTheme: true,
     });
     ipcFiles = new ipcMain_1.IpcFiles();
     ipcFiles.start();
+    ipcProjects = new ipcProject_1.IPCProjects();
+    ipcProjects.start();
     if (serve) {
         require('electron-reload')(__dirname, {
             electron: require(__dirname + "/node_modules/electron"),

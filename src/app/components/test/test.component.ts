@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ProjectsService } from '../../services/projects.service';
 import { FilesService } from './../../services/files.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { FilesService } from './../../services/files.service';
   styleUrls: ['./test.component.scss'],
 })
 export class TestComponent implements OnInit {
-  constructor(private fileService: FilesService) {}
+  constructor(private fileService: FilesService, private projectService: ProjectsService) {}
   files = [];
   sPath = 'c:\\';
 
@@ -17,13 +18,17 @@ export class TestComponent implements OnInit {
   }
 
   sendMsg() {
+    console.log('sendMsg');
     this.files = [];
     this.fileService.listfiles(this.sPath).subscribe(result => {
       this.files = result;
     });
   }
 
-  bell() {
-    //this.els.shell.beep();
+  newProject() {
+    console.log('newProject');
+    this.projectService.createProject('test.pj4').subscribe(result => {
+      console.log(result);
+    });
   }
 }

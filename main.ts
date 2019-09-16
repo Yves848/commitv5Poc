@@ -3,10 +3,12 @@ import * as path from 'path';
 import * as url from 'url';
 
 import { IpcFiles } from './src/IPC/ipcMain';
+import { IPCProjects } from './src/IPC/ipcProject';
 
 let mainWindow: BrowserWindow;
 let serve: any;
 let ipcFiles: IpcFiles;
+let ipcProjects: IPCProjects;
 
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
@@ -18,10 +20,15 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
+    darkTheme: true,
   });
 
   ipcFiles = new IpcFiles();
   ipcFiles.start();
+
+  ipcProjects = new IPCProjects();
+  ipcProjects.start();
+
   if (serve) {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`),
