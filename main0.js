@@ -4,7 +4,7 @@ const path = require("path");
 
 let mainWindow
 
-require('./IPC/ipcMain');
+require('./src/IPC/ipcMain');
 
 function createWindow() {
   mainWindow = new BrowserWindow({

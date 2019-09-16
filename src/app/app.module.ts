@@ -14,10 +14,14 @@ import { MenuComponent } from './components/menu/menu.component';
 import { ProjetComponent } from './components/projet/projet.component';
 import { TestComponent } from './components/test/test.component';
 import { GlobalMaterialModuleModule } from './global-material-module/global-material-module.module';
+import { TabletestComponent } from './tabletest/tabletest.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
-  declarations: [AppComponent, TestComponent, HomeComponent, FichiersComponent, AproposComponent, MenuComponent, ProjetComponent, NewDialogComponent],
-  imports: [BrowserModule, AppRoutingModule, NgxElectronModule, BrowserAnimationsModule, GlobalMaterialModuleModule, FormsModule],
+  declarations: [AppComponent, TestComponent, HomeComponent, FichiersComponent, AproposComponent, MenuComponent, ProjetComponent, NewDialogComponent, TabletestComponent],
+  imports: [BrowserModule, AppRoutingModule, NgxElectronModule, BrowserAnimationsModule, GlobalMaterialModuleModule, FormsModule, MatTableModule, MatPaginatorModule, MatSortModule],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
