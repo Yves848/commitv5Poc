@@ -1,7 +1,7 @@
 {
   "name": "commitv5poc",
   "version": "0.0.0",
-  "main": "main.ts",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,6 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "electron:serve-tsc": "tsc -p tsconfig-serve.json",
+    "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:serve-tsc && electron . --serve",
     "start:electron": "ng build && electron ."
   },
   "private": true,

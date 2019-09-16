@@ -2,12 +2,14 @@ import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-//const url = require('url');
-//const path = require('path');
-let mainWindow;
+import { IpcFiles } from './src/IPC/ipcMain';
 
-//import from './src/IPC/ipcMain';
-///<reference path="./src/IPC/ipcMain.ts"
+let mainWindow: BrowserWindow;
+let serve: any;
+let ipcFiles: IpcFiles;
+
+const args = process.argv.slice(1);
+serve = args.some(val => val === '--serve');
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -18,27 +20,42 @@ function createWindow() {
     },
   });
 
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, `/dist/index.html`),
-      protocol: 'file:',
-      slashes: true,
-    })
-  );
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  ipcFiles = new IpcFiles();
+  ipcFiles.start();
+  if (serve) {
+    require('electron-reload')(__dirname, {
+      electron: require(`${__dirname}/node_modules/electron`),
+    });
+    mainWindow.loadURL('http://localhost:4200');
+  } else {
+    mainWindow.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'dist/index.html'),
+        protocol: 'file:',
+        slashes: true,
+      })
+    );
+  }
 
-  mainWindow.on('closed', function() {
+  if (serve) {
+    mainWindow.webContents.openDevTools();
+  }
+
+  mainWindow.on('closed', () => {
     mainWindow = null;
   });
 }
 
 app.on('ready', createWindow);
 
-app.on('window-all-closed', function() {
-  if (process.platform !== 'darwin') app.quit();
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
 
-app.on('activate', function() {
-  if (mainWindow === null) createWindow();
+app.on('activate', () => {
+  if (mainWindow === null) {
+    createWindow();
+  }
 });
