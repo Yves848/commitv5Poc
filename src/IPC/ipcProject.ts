@@ -1,4 +1,6 @@
 import { ipcMain } from 'electron';
+import * as fs from 'fs';
+import * as path from 'path';
 
 import { IcreateProject } from '../models/IGeneral';
 import { Modules, modulespays } from '../models/ITypesModules';
@@ -49,6 +51,7 @@ export class IPCProjects {
 
       _console('module', module);
       _console('project', this.project);
+      fs.writeFileSync(path.join('./', `${data.projectName}.pj4`), JSON.stringify(this.project));
       event.returnValue = this.project;
     });
   }

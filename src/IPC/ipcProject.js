@@ -12,6 +12,8 @@ var __assign = (this && this.__assign) || function () {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var electron_1 = require("electron");
+var fs = require("fs");
+var path = require("path");
 var ITypesModules_1 = require("../models/ITypesModules");
 //import * as fs from 'fs';
 var _console = console.log;
@@ -48,6 +50,7 @@ var IPCProjects = /** @class */ (function () {
             };
             _console('module', module);
             _console('project', _this.project);
+            fs.writeFileSync(path.join('./', data.projectName + ".pj4"), JSON.stringify(_this.project));
             event.returnValue = _this.project;
         });
     };
