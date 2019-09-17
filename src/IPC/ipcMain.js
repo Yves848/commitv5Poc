@@ -17,6 +17,9 @@ var IpcFiles = /** @class */ (function () {
             _console(files);
             event.returnValue = files;
         });
+        electron_1.ipcMain.on('browse-folder', function (event, data) {
+            _console('IPCMain ts [browse-folder]', data);
+        });
     };
     return IpcFiles;
 }());

@@ -26,9 +26,8 @@ var IPCProjects = /** @class */ (function () {
         _console('IPCProjects Start');
         electron_1.ipcMain.on('create-project', function (event, data) {
             _console('create-project', data);
-            var projectName = data.projectName;
-            var module = ITypesModules_1.modulespays.modulesPays.filter(function (module) {
-                return module.pays === data.pays;
+            var module = ITypesModules_1.modulespays.modulesPays.filter(function (m) {
+                return m.pays === data.pays;
             });
             var moduleImport = module[0].import.filter(function (imp) {
                 return imp.nom === data.import;
@@ -39,10 +38,10 @@ var IPCProjects = /** @class */ (function () {
             _this.project = {
                 informations_generales: {
                     pays: data.pays,
-                    folder: data.projectName,
+                    folder: path.join("" + data.folderName, "" + data.projectName),
                     module_en_cours: 0,
                     date_conversion: null,
-                    date_creation: null,
+                    date_creation: new Date(),
                     page_en_cours: 0,
                 },
                 module_import: __assign({}, moduleImport[0], { date: null, mode: 0, resultats: [] }),
@@ -50,8 +49,8 @@ var IPCProjects = /** @class */ (function () {
             };
             _console('module', module);
             _console('project', _this.project);
-            fs.writeFileSync(path.join('./', data.projectName + ".pj4"), JSON.stringify(_this.project));
-            event.returnValue = _this.project;
+            fs.writeFileSync(path.join(data.folderName, data.projectName + ".pj4"), JSON.stringify(_this.project));
+            event.returnValue = path.join(data.folderName, data.projectName + ".pj4");
         });
     };
     return IPCProjects;

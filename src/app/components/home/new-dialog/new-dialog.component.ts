@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ElectronService } from 'ngx-electron';
 
 import { IcreateProject } from './../../../../models/IGeneral';
 import { modulespays } from './../../../../models/ITypesModules';
@@ -31,7 +32,11 @@ export class NewDialogComponent implements OnInit {
       return imp.nom;
     });
   }
-  constructor(public dialogRef: MatDialogRef<NewDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: IcreateProject) {}
+  constructor(
+    public dialogRef: MatDialogRef<NewDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IcreateProject,
+    private els: ElectronService
+  ) {}
 
   ngOnInit() {
     this.getModulesPays();
@@ -44,5 +49,9 @@ export class NewDialogComponent implements OnInit {
   onPaysChange() {
     console.log(this.data.pays);
     this.getModulesPays(this.data.pays);
+  }
+
+  browseFolder() {
+    this.els.ipcRenderer.sendSync('browse-folder', this.data.folderName);
   }
 }

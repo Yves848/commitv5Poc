@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ElectronService } from 'ngx-electron';
 import { IcreateProject } from 'src/models/IGeneral';
 
@@ -13,25 +13,28 @@ import { NewDialogComponent } from './new-dialog/new-dialog.component';
 export class HomeComponent implements OnInit {
   nom: string;
   project: IcreateProject = {
+    folderName: './',
     projectName: '',
     import: '',
     pays: 'fr',
     transfert: '',
   };
 
-  constructor(public dialog: MatDialog, private els: ElectronService) {}
+  constructor(public dialog: MatDialog, private els: ElectronService, private snack: MatSnackBar) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(NewDialogComponent, {
       width: '550px',
       data: this.project,
+      disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.els.ipcRenderer.sendSync('create-project', res);
+        const name = this.els.ipcRenderer.sendSync('create-project', res);
+        console.log(name);
+        this.snack.open(`${name}`, 'Projet créé', { duration: 3000, verticalPosition: 'top' });
       }
-      console.log('clicked ok', res);
     });
   }
 

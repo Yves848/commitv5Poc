@@ -18,9 +18,8 @@ export class IPCProjects {
 
     ipcMain.on('create-project', (event, data: IcreateProject) => {
       _console('create-project', data);
-      const projectName = data.projectName;
-      const module = modulespays.modulesPays.filter(module => {
-        return module.pays === data.pays;
+      const module = modulespays.modulesPays.filter(m => {
+        return m.pays === data.pays;
       });
 
       const moduleImport = module[0].import.filter(imp => {
@@ -34,10 +33,10 @@ export class IPCProjects {
       this.project = {
         informations_generales: {
           pays: data.pays,
-          folder: data.projectName,
+          folder: path.join(`${data.folderName}`, `${data.projectName}`),
           module_en_cours: 0,
           date_conversion: null,
-          date_creation: null,
+          date_creation: new Date(),
           page_en_cours: 0,
         },
         module_import: { ...moduleImport[0], date: null, mode: 0, resultats: [] },
@@ -51,8 +50,8 @@ export class IPCProjects {
 
       _console('module', module);
       _console('project', this.project);
-      fs.writeFileSync(path.join('./', `${data.projectName}.pj4`), JSON.stringify(this.project));
-      event.returnValue = this.project;
+      fs.writeFileSync(path.join(data.folderName, `${data.projectName}.pj4`), JSON.stringify(this.project));
+      event.returnValue = path.join(data.folderName, `${data.projectName}.pj4`);
     });
   }
 }

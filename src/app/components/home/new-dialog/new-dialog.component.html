@@ -3,9 +3,12 @@
 
 
   <div mat-dialog-content id="newProject">
-    <mat-form-field>
+    <mat-form-field id="projectName">
       <mat-label>Nom du projet :</mat-label>
       <input matInput [(ngModel)]="data.projectName">
+      <button mat-button matSuffix mat-icon-button>
+        <mat-icon>folder_open</mat-icon>
+      </button>
     </mat-form-field>
     <mat-form-field>
       <mat-label>Pays</mat-label>

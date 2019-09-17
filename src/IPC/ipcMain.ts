@@ -16,5 +16,9 @@ export class IpcFiles {
       _console(files);
       event.returnValue = files;
     });
+
+    ipcMain.on('browse-folder', (event, data) => {
+      _console('IPCMain ts [browse-folder]', data);
+    });
   }
 }
