@@ -1,42 +1,51 @@
 <h1 mat-dialog-title>Nouveau Projet</h1>
 <div>
-
-
-  <div mat-dialog-content id="newProject">
-    <mat-form-field id="projectName">
-      <mat-label>Nom du projet :</mat-label>
-      <input matInput [(ngModel)]="data.projectName">
-      <button mat-button matSuffix mat-icon-button>
-        <mat-icon>folder_open</mat-icon>
-      </button>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Pays</mat-label>
-      <mat-select [(ngModel)]="data.pays" (selectionChange)="onPaysChange()">
-        <mat-option *ngFor="let p of pays" [value]="p">
-          {{ p }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Import</mat-label>
-      <mat-select [(ngModel)]="data.import">
-        <mat-option *ngFor="let import of nomsModulesImport" [value]="import">
-          {{ import }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Transfert</mat-label>
-      <mat-select [(ngModel)]="data.transfert">
-        <mat-option *ngFor="let transfert of nomsModulesTransfert" [value]="transfert">
-          {{ transfert }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+    <div mat-dialog-content>
+        <mat-grid-list cols="2" rowHeight="80px">
+            <mat-grid-tile>
+                <mat-form-field id="projectName">
+                    <mat-label>Nom du projet :</mat-label>
+                    <input matInput [(ngModel)]="data.projectName" />
+                    <button mat-button matSuffix mat-icon-button>
+            <mat-icon>folder_open</mat-icon>
+          </button>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field id="pays">
+                    <mat-label>Pays</mat-label>
+                    <mat-select [(ngModel)]="data.pays" (selectionChange)="onPaysChange()">
+                        <mat-option *ngFor="let p of pays" [value]="p">
+                            {{ p }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field id="import">
+                    <mat-label>Import</mat-label>
+                    <mat-select [(ngModel)]="data.import">
+                        <mat-option *ngFor="let import of nomsModulesImport" [value]="import">
+                            {{ import }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field id="transfert">
+                    <mat-label>Transfert</mat-label>
+                    <mat-select [(ngModel)]="data.transfert">
+                        <mat-option *ngFor="let transfert of nomsModulesTransfert" [value]="transfert">
+                            {{ transfert }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
 </div>
+
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Abandonner</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+    <button mat-button (click)="onNoClick()">Abandonner</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
 </div>
