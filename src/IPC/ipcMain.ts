@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron';
+import { dialog, ipcMain } from 'electron';
 import * as fs from 'fs';
 
 const _console = console.log;
@@ -19,6 +19,14 @@ export class IpcFiles {
 
     ipcMain.on('browse-folder', (event, data) => {
       _console('IPCMain ts [browse-folder]', data);
+
+      const options: Electron.OpenDialogSyncOptions = {
+        title: 'Choisir le répertoire pour le projet',
+        defaultPath: data.path,
+        properties: ['createDirectory', 'openDirectory', 'openFile', 'promptToCreate'],
+      };
+      const file = dialog.showSaveDialogSync(null, options);
+      event.returnValue = file;
     });
   }
 }

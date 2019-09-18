@@ -33,7 +33,7 @@ export class IPCProjects {
       this.project = {
         informations_generales: {
           pays: data.pays,
-          folder: path.join(`${data.folderName}`, `${data.projectName}`),
+          folder: path.join(`${data.projectName}`),
           module_en_cours: 0,
           date_conversion: null,
           date_creation: new Date(),
@@ -50,8 +50,8 @@ export class IPCProjects {
 
       _console('module', module);
       _console('project', this.project);
-      fs.writeFileSync(path.join(data.folderName, `${data.projectName}.pj4`), JSON.stringify(this.project));
-      event.returnValue = path.join(data.folderName, `${data.projectName}.pj4`);
+      fs.writeFileSync(path.join(`${data.projectName}`), JSON.stringify(this.project));
+      event.returnValue = path.join(`${data.projectName}`);
     });
   }
 }

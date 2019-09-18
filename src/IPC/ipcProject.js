@@ -38,7 +38,7 @@ var IPCProjects = /** @class */ (function () {
             _this.project = {
                 informations_generales: {
                     pays: data.pays,
-                    folder: path.join("" + data.folderName, "" + data.projectName),
+                    folder: path.join("" + data.projectName),
                     module_en_cours: 0,
                     date_conversion: null,
                     date_creation: new Date(),
@@ -49,8 +49,8 @@ var IPCProjects = /** @class */ (function () {
             };
             _console('module', module);
             _console('project', _this.project);
-            fs.writeFileSync(path.join(data.folderName, data.projectName + ".pj4"), JSON.stringify(_this.project));
-            event.returnValue = path.join(data.folderName, data.projectName + ".pj4");
+            fs.writeFileSync(path.join("" + data.projectName), JSON.stringify(_this.project));
+            event.returnValue = path.join("" + data.projectName);
         });
     };
     return IPCProjects;

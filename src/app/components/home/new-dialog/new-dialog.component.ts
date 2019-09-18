@@ -49,9 +49,12 @@ export class NewDialogComponent implements OnInit {
   onPaysChange() {
     console.log(this.data.pays);
     this.getModulesPays(this.data.pays);
+    this.data.folderName = 'folder';
   }
 
   browseFolder() {
-    this.els.ipcRenderer.sendSync('browse-folder', this.data.folderName);
+    const folder = this.els.ipcRenderer.sendSync('browse-folder', { path: this.data.folderName });
+    console.log(folder);
+    this.data.projectName = folder;
   }
 }

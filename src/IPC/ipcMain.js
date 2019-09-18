@@ -19,6 +19,13 @@ var IpcFiles = /** @class */ (function () {
         });
         electron_1.ipcMain.on('browse-folder', function (event, data) {
             _console('IPCMain ts [browse-folder]', data);
+            var options = {
+                title: 'Choisir le répertoire pour le projet',
+                defaultPath: data.path,
+                properties: ['createDirectory', 'openDirectory', 'openFile', 'promptToCreate'],
+            };
+            var file = electron_1.dialog.showSaveDialogSync(null, options);
+            event.returnValue = file;
         });
     };
     return IpcFiles;
