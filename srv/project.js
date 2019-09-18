@@ -49,6 +49,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs-extra");
 var firebird = require("node-firebird");
 var path = require("path");
+var childprocess = require("child_process");
 var output = require("../src/utils/output");
 function asyncForEach(array, callback) {
     return __awaiter(this, void 0, void 0, function () {
@@ -79,16 +80,120 @@ var Project = /** @class */ (function () {
         this.C_OPTIONS_PHA = {
             host: '127.0.0.1',
             port: 3050,
-            database: '/PHA3.FDB',
+            database: '\\PHA3.FDB',
             user: 'SYSDBA',
             password: 'masterkey',
             lowercase_keys: false,
             role: null,
             pageSize: 4096,
-            commit: null,
+            commit: null
         };
         output._console(output.chalk.blueBright('Project Object créé'), this.C_OPTIONS_PHA);
     }
+    Project.prototype.execFile = function (fichier, params) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            childprocess.execFile("" + fichier, params, function (error, stdout, stderr) {
+                                console.log(new Date().toISOString(), "Execution du script " + fichier + " : " + (stderr === undefined ? 'Ok :)' : stderr));
+                            });
+                            return [2 /*return*/];
+                        });
+                    }); })];
+            });
+        });
+    };
+    Project.prototype.executeScript = function (username, password, sql, db) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                        var p;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    p = ['-u', username, '-p', password];
+                                    if (db) {
+                                        p.push(db);
+                                    }
+                                    Array.prototype.push.apply(p, ['-i', sql]);
+                                    output._console(this.C_CHEMIN_BASE + "\\fb3\\isql.exe");
+                                    return [4 /*yield*/, this.execFile(this.C_CHEMIN_BASE + "\\fb3\\isql.exe", p)];
+                                case 1:
+                                    _a.sent();
+                                    output._console(output.chalk.blueBright(new Date().toISOString()), "Execution du script " + sql);
+                                    resolve();
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); })];
+            });
+        });
+    };
+    Project.prototype.executeDirectoryScripts = function (db, username, password, directory) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                        var files;
+                        var _this = this;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    output._console(directory);
+                                    if (!(directory && fs.pathExistsSync(directory))) return [3 /*break*/, 2];
+                                    files = fs.readdirSync(directory);
+                                    return [4 /*yield*/, asyncForEach(files, function (file) { return __awaiter(_this, void 0, void 0, function () {
+                                            var sql;
+                                            return __generator(this, function (_a) {
+                                                switch (_a.label) {
+                                                    case 0:
+                                                        sql = directory + '\\' + file;
+                                                        output._console(sql);
+                                                        if (!!fs.statSync(sql).isDirectory()) return [3 /*break*/, 2];
+                                                        return [4 /*yield*/, this.executeScript(username, password, sql, db)];
+                                                    case 1:
+                                                        _a.sent();
+                                                        _a.label = 2;
+                                                    case 2: return [2 /*return*/];
+                                                }
+                                            });
+                                        }); })];
+                                case 1:
+                                    _a.sent();
+                                    _a.label = 2;
+                                case 2:
+                                    resolve();
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); })];
+            });
+        });
+    };
+    Project.prototype.executeScripts = function (pha) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                        var chemindb;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    chemindb = pha.database;
+                                    return [4 /*yield*/, this.executeDirectoryScripts(chemindb, pha.user, pha.password, this.C_CHEMIN_BASE_SCRIPT_SQL)];
+                                case 1:
+                                    _a.sent();
+                                    resolve();
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); })];
+            });
+        });
+    };
     Project.prototype.createDatabase = function (pha) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -116,16 +221,20 @@ var Project = /** @class */ (function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
-                                    m = JSON.parse(fs.readFileSync(this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + module + ".json").toString());
+                                    m = JSON.parse(fs
+                                        .readFileSync(this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + module + ".json")
+                                        .toString());
                                     m2 = [];
                                     return [4 /*yield*/, asyncForEach(m, function (p) {
                                             output._console(output.chalk.redBright('p'), p);
                                             var traitements;
-                                            traitements = JSON.parse(fs.readFileSync(_this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + p.traitements).toString());
+                                            traitements = JSON.parse(fs
+                                                .readFileSync(_this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + p.traitements)
+                                                .toString());
                                             m2.push({
                                                 libelle: p.libelle,
                                                 Suppression: p.Suppression,
-                                                traitements: traitements,
+                                                traitements: traitements
                                             });
                                         })];
                                 case 1:
@@ -150,8 +259,8 @@ var Project = /** @class */ (function () {
                                     pha = __assign({}, this.C_OPTIONS_PHA);
                                     _c.label = 1;
                                 case 1:
-                                    _c.trys.push([1, 5, , 6]);
-                                    pha.database = directory + "/" + pha.database;
+                                    _c.trys.push([1, 6, , 7]);
+                                    pha.database = "" + directory + pha.database;
                                     pha.commit = JSON.parse(fs.readFileSync(directory + "\\commit.pj4").toString());
                                     output._console(output.chalk.blueBright('Pha created'), pha);
                                     _a = pha.commit.module_import;
@@ -167,13 +276,16 @@ var Project = /** @class */ (function () {
                                     return [4 /*yield*/, this.createDatabase(pha)];
                                 case 4:
                                     _c.sent();
-                                    resolve(pha);
-                                    return [3 /*break*/, 6];
+                                    return [4 /*yield*/, this.executeScripts(pha)];
                                 case 5:
+                                    _c.sent();
+                                    resolve(pha);
+                                    return [3 /*break*/, 7];
+                                case 6:
                                     error_1 = _c.sent();
                                     reject(error_1);
-                                    return [3 /*break*/, 6];
-                                case 6: return [2 /*return*/];
+                                    return [3 /*break*/, 7];
+                                case 7: return [2 /*return*/];
                             }
                         });
                     }); })];
@@ -184,16 +296,8 @@ var Project = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var prj;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        this.open(directory).then(function (pha) { return (prj = pha); });
-                        // Attention => faire la gestion de l'exception
-                        return [4 /*yield*/, this.createDatabase(prj)];
-                    case 1:
-                        // Attention => faire la gestion de l'exception
-                        _a.sent();
-                        return [2 /*return*/];
-                }
+                this.open(directory).then(function (pha) { return (prj = pha); });
+                return [2 /*return*/];
             });
         });
     };
