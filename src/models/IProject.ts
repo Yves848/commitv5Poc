@@ -1,4 +1,4 @@
-export interface Project {
+export interface ProjectFile {
   informations_generales: InfosGen;
   module_import: ModuleImport;
   module_transfert: ModuleTransfert;
@@ -10,6 +10,7 @@ export interface ModuleImport {
   version: string;
   mode: number;
   resultats: Resultats[];
+  groupes: Groupes[];
 }
 
 export interface ModuleTransfert {
@@ -18,6 +19,7 @@ export interface ModuleTransfert {
   version: string;
   mode: number;
   resultats: Resultats[];
+  groupes: Groupes[];
 }
 
 export interface InfosGen {
@@ -31,4 +33,23 @@ export interface InfosGen {
 
 export interface Resultats {
   ligne: string;
+}
+
+export interface ProjectGroup {
+  libelle: string;
+  Suppression: string;
+  traitements: string;
+}
+
+export interface Groupes {
+  libelle: string;
+  Suppression: string;
+  traitements: Traitement[];
+}
+
+export interface Traitement {
+  id: string;
+  libelle: string;
+  sqlSelect: string;
+  sqlInsert: string;
 }

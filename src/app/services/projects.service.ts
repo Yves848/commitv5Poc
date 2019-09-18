@@ -3,7 +3,7 @@ import { ElectronService } from 'ngx-electron';
 import { Observable } from 'rxjs';
 
 import { IcreateProject } from '../../models/IGeneral';
-import { Project } from '../../models/IProject';
+import { ProjectFile } from '../../models/IProject';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +11,9 @@ import { Project } from '../../models/IProject';
 export class ProjectsService {
   constructor(private els: ElectronService) {}
 
-  createProject(projectName: string): Observable<Project> {
+  createProject(projectName: string): Observable<ProjectFile> {
     console.log('service project - createProject');
-    const result = new Observable<Project>(observer => {
+    const result = new Observable<ProjectFile>(observer => {
       console.log('send message');
       const icreateProject: IcreateProject = {
         projectName,
