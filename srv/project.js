@@ -47,6 +47,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = require("fs-extra");
+var firebird = require("node-firebird");
 var path = require("path");
 var output = require("../src/utils/output");
 function asyncForEach(array, callback) {
@@ -88,6 +89,23 @@ var Project = /** @class */ (function () {
         };
         output._console(output.chalk.blueBright('Project Object créé'), this.C_OPTIONS_PHA);
     }
+    Project.prototype.createDatabase = function (pha) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            output._console(output.chalk.blueBright('Creation DB'));
+                            firebird.create(pha, function (err, db) {
+                                output._console(output.chalk.blueBright('database created'), output.chalk.redBright.bold.underline(pha.database));
+                            });
+                            resolve();
+                            return [2 /*return*/];
+                        });
+                    }); })];
+            });
+        });
+    };
     Project.prototype.getTreatments = function (type, module) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -104,7 +122,6 @@ var Project = /** @class */ (function () {
                                             output._console(output.chalk.redBright('p'), p);
                                             var traitements;
                                             traitements = JSON.parse(fs.readFileSync(_this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + p.traitements).toString());
-                                            //output._console(output.chalk.redBright('traitements'), traitements);
                                             m2.push({
                                                 libelle: p.libelle,
                                                 Suppression: p.Suppression,
@@ -133,7 +150,7 @@ var Project = /** @class */ (function () {
                                     pha = __assign({}, this.C_OPTIONS_PHA);
                                     _c.label = 1;
                                 case 1:
-                                    _c.trys.push([1, 4, , 5]);
+                                    _c.trys.push([1, 5, , 6]);
                                     pha.database = directory + "/" + pha.database;
                                     pha.commit = JSON.parse(fs.readFileSync(directory + "\\commit.pj4").toString());
                                     output._console(output.chalk.blueBright('Pha created'), pha);
@@ -145,14 +162,18 @@ var Project = /** @class */ (function () {
                                     return [4 /*yield*/, this.getTreatments('transfert', pha.commit.module_transfert.nom)];
                                 case 3:
                                     _b.groupes = _c.sent();
+                                    pha.commit.informations_generales.folder = directory;
                                     output._console(output.chalk.redBright('Pha loaded'), pha);
-                                    resolve(pha);
-                                    return [3 /*break*/, 5];
+                                    return [4 /*yield*/, this.createDatabase(pha)];
                                 case 4:
+                                    _c.sent();
+                                    resolve(pha);
+                                    return [3 /*break*/, 6];
+                                case 5:
                                     error_1 = _c.sent();
                                     reject(error_1);
-                                    return [3 /*break*/, 5];
-                                case 5: return [2 /*return*/];
+                                    return [3 /*break*/, 6];
+                                case 6: return [2 /*return*/];
                             }
                         });
                     }); })];
@@ -163,8 +184,16 @@ var Project = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var prj;
             return __generator(this, function (_a) {
-                this.open(directory).then(function (pha) { return (prj = pha); });
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        this.open(directory).then(function (pha) { return (prj = pha); });
+                        // Attention => faire la gestion de l'exception
+                        return [4 /*yield*/, this.createDatabase(prj)];
+                    case 1:
+                        // Attention => faire la gestion de l'exception
+                        _a.sent();
+                        return [2 /*return*/];
+                }
             });
         });
     };
