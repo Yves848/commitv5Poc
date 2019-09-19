@@ -24,7 +24,7 @@ var IPCProjects = /** @class */ (function () {
     }
     IPCProjects.prototype.start = function () {
         var _this = this;
-        output_1._console(output.chalk.bgBlue.yellowBright.bold('IPCProjects - Start'), output.chalk.bgWhiteBright.green('Ok'));
+        output_1._console(output.chalk.greenBright.bold('IPCProjects - Start'), output.chalk.bgWhiteBright.green('Ok'));
         // Définition des évènements
         electron_1.ipcMain.on('create-project', function (event, data) {
             _this.createProjectFile(event, data);
@@ -54,8 +54,6 @@ var IPCProjects = /** @class */ (function () {
             module_import: __assign({}, moduleImport[0], { date: null, mode: 0, resultats: [], groupes: [] }),
             module_transfert: __assign({}, moduleTransfert[0], { date: null, mode: 0, resultats: [], groupes: [] }),
         };
-        output._console(output.chalk.greenBright.underline('module'), module);
-        output._console(output.chalk.greenBright.underline('project'), this.projectFile);
         fs.writeFileSync(path.join(data.projectName + "\\commit.pj4"), JSON.stringify(this.projectFile));
         this.createProject(data.projectName);
         event.returnValue = path.join("" + data.projectName);

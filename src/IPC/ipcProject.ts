@@ -15,7 +15,7 @@ export class IPCProjects {
   project: Project;
 
   start() {
-    _console(output.chalk.bgBlue.yellowBright.bold('IPCProjects - Start'), output.chalk.bgWhiteBright.green('Ok'));
+    _console(output.chalk.greenBright.bold('IPCProjects - Start'), output.chalk.bgWhiteBright.green('Ok'));
 
     // Définition des évènements
     ipcMain.on('create-project', (event, data: IcreateProject) => {
@@ -56,8 +56,6 @@ export class IPCProjects {
       },
     };
 
-    output._console(output.chalk.greenBright.underline('module'), module);
-    output._console(output.chalk.greenBright.underline('project'), this.projectFile);
     fs.writeFileSync(path.join(`${data.projectName}\\commit.pj4`), JSON.stringify(this.projectFile));
     this.createProject(data.projectName);
     event.returnValue = path.join(`${data.projectName}`);

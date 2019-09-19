@@ -46,10 +46,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var childprocess = require("child_process");
 var fs = require("fs-extra");
 var firebird = require("node-firebird");
 var path = require("path");
-var childprocess = require("child_process");
 var output = require("../src/utils/output");
 function asyncForEach(array, callback) {
     return __awaiter(this, void 0, void 0, function () {
@@ -86,7 +86,7 @@ var Project = /** @class */ (function () {
             lowercase_keys: false,
             role: null,
             pageSize: 4096,
-            commit: null
+            commit: null,
         };
         output._console(output.chalk.blueBright('Project Object créé'), this.C_OPTIONS_PHA);
     }
@@ -98,6 +98,7 @@ var Project = /** @class */ (function () {
                         return __generator(this, function (_a) {
                             childprocess.execFile("" + fichier, params, function (error, stdout, stderr) {
                                 console.log(new Date().toISOString(), "Execution du script " + fichier + " : " + (stderr === undefined ? 'Ok :)' : stderr));
+                                resolve();
                             });
                             return [2 /*return*/];
                         });
@@ -119,7 +120,7 @@ var Project = /** @class */ (function () {
                                         p.push(db);
                                     }
                                     Array.prototype.push.apply(p, ['-i', sql]);
-                                    output._console(this.C_CHEMIN_BASE + "\\fb3\\isql.exe");
+                                    output._console(this.C_CHEMIN_BASE + "\\fb3\\isql.exe", p);
                                     return [4 /*yield*/, this.execFile(this.C_CHEMIN_BASE + "\\fb3\\isql.exe", p)];
                                 case 1:
                                     _a.sent();
@@ -145,13 +146,14 @@ var Project = /** @class */ (function () {
                                     output._console(directory);
                                     if (!(directory && fs.pathExistsSync(directory))) return [3 /*break*/, 2];
                                     files = fs.readdirSync(directory);
+                                    output._console(output.chalk.greenBright('directory & files'), files);
                                     return [4 /*yield*/, asyncForEach(files, function (file) { return __awaiter(_this, void 0, void 0, function () {
                                             var sql;
                                             return __generator(this, function (_a) {
                                                 switch (_a.label) {
                                                     case 0:
                                                         sql = directory + '\\' + file;
-                                                        output._console(sql);
+                                                        output._console(output.chalk.redBright('sql file: '), output.chalk.bold(sql));
                                                         if (!!fs.statSync(sql).isDirectory()) return [3 /*break*/, 2];
                                                         return [4 /*yield*/, this.executeScript(username, password, sql, db)];
                                                     case 1:
@@ -182,6 +184,7 @@ var Project = /** @class */ (function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
+                                    output._console(output.chalk.whiteBright('executeScripts'));
                                     chemindb = pha.database;
                                     return [4 /*yield*/, this.executeDirectoryScripts(chemindb, pha.user, pha.password, this.C_CHEMIN_BASE_SCRIPT_SQL)];
                                 case 1:
@@ -202,9 +205,9 @@ var Project = /** @class */ (function () {
                         return __generator(this, function (_a) {
                             output._console(output.chalk.blueBright('Creation DB'));
                             firebird.create(pha, function (err, db) {
-                                output._console(output.chalk.blueBright('database created'), output.chalk.redBright.bold.underline(pha.database));
+                                output._console(output.chalk.blueBright('database created'), output.chalk.redBright.bold.underline(pha.database), output.chalk.greenBright.blue('OK'));
+                                resolve();
                             });
-                            resolve();
                             return [2 /*return*/];
                         });
                     }); })];
@@ -221,20 +224,16 @@ var Project = /** @class */ (function () {
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
-                                    m = JSON.parse(fs
-                                        .readFileSync(this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + module + ".json")
-                                        .toString());
+                                    m = JSON.parse(fs.readFileSync(this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + module + ".json").toString());
                                     m2 = [];
                                     return [4 /*yield*/, asyncForEach(m, function (p) {
                                             output._console(output.chalk.redBright('p'), p);
                                             var traitements;
-                                            traitements = JSON.parse(fs
-                                                .readFileSync(_this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + p.traitements)
-                                                .toString());
+                                            traitements = JSON.parse(fs.readFileSync(_this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + p.traitements).toString());
                                             m2.push({
                                                 libelle: p.libelle,
                                                 Suppression: p.Suppression,
-                                                traitements: traitements
+                                                traitements: traitements,
                                             });
                                         })];
                                 case 1:
@@ -262,7 +261,7 @@ var Project = /** @class */ (function () {
                                     _c.trys.push([1, 6, , 7]);
                                     pha.database = "" + directory + pha.database;
                                     pha.commit = JSON.parse(fs.readFileSync(directory + "\\commit.pj4").toString());
-                                    output._console(output.chalk.blueBright('Pha created'), pha);
+                                    output._console(output.chalk.blueBright('Pha created'));
                                     _a = pha.commit.module_import;
                                     return [4 /*yield*/, this.getTreatments('import', pha.commit.module_import.nom)];
                                 case 2:
@@ -272,7 +271,7 @@ var Project = /** @class */ (function () {
                                 case 3:
                                     _b.groupes = _c.sent();
                                     pha.commit.informations_generales.folder = directory;
-                                    output._console(output.chalk.redBright('Pha loaded'), pha);
+                                    output._console(output.chalk.redBright('Pha loaded'));
                                     return [4 /*yield*/, this.createDatabase(pha)];
                                 case 4:
                                     _c.sent();
