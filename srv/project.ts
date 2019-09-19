@@ -3,16 +3,11 @@ import * as fs from 'fs-extra';
 import * as firebird from 'node-firebird';
 import * as path from 'path';
 
+import { asyncForEach } from '../src/utils/hof';
 import { chalk, LogBase } from '../src/utils/output';
 import { Module } from './../src/app/modules/BaseModule';
 import { Groupes, ProjectGroup, Traitement } from './../src/models/IProject';
 import { OptionsPHA } from './PHAInterfaces';
-
-async function asyncForEach(array, callback) {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-}
 
 export class Project {
   C_CHEMIN_BASE: string;
@@ -117,7 +112,6 @@ export class Project {
     this.log.log('loadModule', type, module);
     if (module && module.length !== 0) {
       try {
-        //return require(`../modules/${type}/${module}/${module}`);
         import(`../modules/${type}/${module}/${module}`).then(m => {
           const _module = { ...m };
           this.log.info(module);
