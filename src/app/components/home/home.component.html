@@ -1,3 +1,9 @@
-<div id="container">
-  <button id="nouveauProjet" mat-raised-button (click)="openDialog()">Nouveau Projet</button>
-</div>
+<mat-grid-list cols="8">
+  <mat-grid-tile [colspan]="8">
+    <button id="nouveauProjet" mat-raised-button (click)="openDialog()">Nouveau Projet</button>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="4">
+    <p>{{message}}</p>
+  </mat-grid-tile>
+
+</mat-grid-list>

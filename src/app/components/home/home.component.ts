@@ -20,7 +20,13 @@ export class HomeComponent implements OnInit {
     transfert: '',
   };
 
-  constructor(public dialog: MatDialog, private els: ElectronService, private snack: MatSnackBar) {}
+  message = '';
+
+  constructor(public dialog: MatDialog, private els: ElectronService, private snack: MatSnackBar) {
+    this.els.ipcRenderer.on('message', (event, data) => {
+      this.message = data.message;
+    });
+  }
 
   openDialog(): void {
     this.project.folderName = './';

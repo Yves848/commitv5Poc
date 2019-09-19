@@ -19,6 +19,20 @@ export const bigText = (text: string, color: string = 'white') => {
   });
 };
 
-export const smallText = (text: string, color: string = 'white') => {
-  _console(chalk[color](text));
-};
+export class LogBase {
+  log(message?: any, ...params: any[]) {
+    console.log(chalk.white.bgBlack(new Date().toISOString()), message, ...params);
+  }
+
+  warning(message?: any, ...params: any[]) {
+    console.log(chalk.red.bgBlack(new Date().toISOString()), message, ...params);
+  }
+
+  error(message?: any, ...params: any[]) {
+    console.log(chalk.whiteBright.bgRedBright(new Date().toISOString()), message, ...params);
+  }
+
+  info(message?: any, ...params: any[]) {
+    console.log(chalk.greenBright.bgBlack(new Date().toISOString()), message, ...params);
+  }
+}
