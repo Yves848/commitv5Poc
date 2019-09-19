@@ -23,10 +23,10 @@ function createWindow() {
     darkTheme: true,
   });
 
-  ipcFiles = new IpcFiles();
+  ipcFiles = new IpcFiles(mainWindow);
   ipcFiles.start();
 
-  ipcProjects = new IPCProjects();
+  ipcProjects = new IPCProjects(mainWindow);
   ipcProjects.start();
 
   if (serve) {
@@ -43,6 +43,10 @@ function createWindow() {
       })
     );
   }
+
+  mainWindow.maximize();
+
+  mainWindow.webContents.openDevTools();
 
   if (serve) {
     mainWindow.webContents.openDevTools();

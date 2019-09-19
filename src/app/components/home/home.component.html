@@ -2,8 +2,13 @@
   <mat-grid-tile [colspan]="8">
     <button id="nouveauProjet" mat-raised-button (click)="openDialog()">Nouveau Projet</button>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="4">
-    <p>{{message}}</p>
+  <mat-grid-tile [colspan]="8">
+    <button id="ouvrirProjet" mat-raised-button (click)="openProject()">Ouvrir Projet</button>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="4" *ngIf="messages.length > 0">
+    <ul>
+      <li *ngFor="let message of messages">{{message}}</li>
+    </ul>
   </mat-grid-tile>
 
 </mat-grid-list>

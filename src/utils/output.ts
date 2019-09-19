@@ -1,9 +1,6 @@
 import * as Chalk from 'ansi-colors';
 import * as figlet from 'figlet';
 
-// tslint:disable-next-line: variable-name
-export const _console = console.log;
-
 export const chalk = Chalk;
 
 export const colorText = (text: any, color: Chalk.StyleFunction) => {
@@ -15,7 +12,7 @@ export const bigText = (text: string, color: string = 'white') => {
     if (error) {
       return process.exit(1);
     }
-    _console(chalk[color](data));
+    console.log(chalk[color](data));
   });
 };
 

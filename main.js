@@ -20,9 +20,9 @@ function createWindow() {
         },
         darkTheme: true,
     });
-    ipcFiles = new ipcMain_1.IpcFiles();
+    ipcFiles = new ipcMain_1.IpcFiles(mainWindow);
     ipcFiles.start();
-    ipcProjects = new ipcProject_1.IPCProjects();
+    ipcProjects = new ipcProject_1.IPCProjects(mainWindow);
     ipcProjects.start();
     if (serve) {
         require('electron-reload')(__dirname, {
@@ -37,6 +37,8 @@ function createWindow() {
             slashes: true,
         }));
     }
+    mainWindow.maximize();
+    mainWindow.webContents.openDevTools();
     if (serve) {
         mainWindow.webContents.openDevTools();
     }

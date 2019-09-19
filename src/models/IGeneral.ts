@@ -5,3 +5,9 @@ export interface IcreateProject {
   import: string;
   transfert: string;
 }
+
+export interface IExecuteTreatment {
+  directory: string;
+  type: string;
+  treatment: string;
+}

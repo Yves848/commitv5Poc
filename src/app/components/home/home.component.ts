@@ -3,6 +3,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ElectronService } from 'ngx-electron';
 import { IcreateProject } from 'src/models/IGeneral';
 
+import { FirebirdService } from './../../services/firebird.service';
 import { NewDialogComponent } from './new-dialog/new-dialog.component';
 
 @Component({
@@ -20,11 +21,23 @@ export class HomeComponent implements OnInit {
     transfert: '',
   };
 
-  message = '';
+  messages: string[] = [];
 
-  constructor(public dialog: MatDialog, private els: ElectronService, private snack: MatSnackBar) {
+  constructor(public dialog: MatDialog, private els: ElectronService, private snack: MatSnackBar, private firebird: FirebirdService) {
     this.els.ipcRenderer.on('message', (event, data) => {
-      this.message = data.message;
+      this.firebird.setMessage(data.message);
+    });
+
+    this.els.ipcRenderer.on('popup', (event, data) => {
+      console.log(data.message);
+      this.snack.open(`${data.message}`, 'Info', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'left' });
+    });
+
+    this.firebird._message.subscribe(message => {
+      if (message) {
+        console.log(message);
+        this.messages.push(message);
+      }
     });
   }
 
@@ -42,11 +55,26 @@ export class HomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        const name = this.els.ipcRenderer.sendSync('create-project', res);
-        console.log(name);
-        this.snack.open(`${name}`, 'Projet créé', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'right' });
+        this.messages = [];
+        this.els.ipcRenderer.send('create-project', res);
       }
     });
+    this.messages.push('Démarré');
+    console.log('démarré');
+  }
+
+  openProject(): void {
+    this.project.folderName = './';
+    this.project.projectName = '';
+    this.project.import = '';
+    this.project.transfert = '';
+    this.project.pays = 'fr';
+
+    this.project.projectName = this.els.ipcRenderer.sendSync('browse-folder', { path: this.project.folderName });
+    this.els.ipcRenderer.send('open-project', this.project);
+
+    this.messages.push('Démarré');
+    console.log('démarré');
   }
 
   ngOnInit() {}

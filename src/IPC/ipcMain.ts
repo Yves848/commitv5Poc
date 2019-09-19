@@ -1,24 +1,29 @@
-import { dialog, ipcMain } from 'electron';
+import { BrowserWindow, dialog, ipcMain } from 'electron';
 import * as fs from 'fs';
 
-import * as output from './../utils/output';
+import { chalk, LogBase } from './../utils/output';
 
 export class IpcFiles {
+  log: LogBase;
+
+  constructor(private mainWindow: BrowserWindow) {
+    this.log = new LogBase();
+  }
+
   start() {
-    output._console(output.chalk.greenBright.bold('IPCMain - Start'), output.chalk.bgWhiteBright.green('Ok'));
+    this.log.info('IPCMain - Start', chalk.bgWhiteBright.green('Ok'));
     ipcMain.on('init-fichier', (event, data) => {
-      output._console('IPCMain ts [message]', event, data);
+      this.log.log('IPCMain ts [message]', event, data);
     });
 
     ipcMain.on('listfiles', (event, data) => {
-      output._console('IPCMain ts [message]', data);
+      this.log.log('IPCMain ts [message]', data);
       const files = fs.readdirSync(data.path);
-      output._console(files);
       event.returnValue = files;
     });
 
     ipcMain.on('browse-folder', (event, data) => {
-      output._console('IPCMain ts [browse-folder]', data);
+      this.log.log('IPCMain ts [browse-folder]', data);
 
       const options: Electron.OpenDialogSyncOptions = {
         title: 'Choisir le répertoire pour le projet',

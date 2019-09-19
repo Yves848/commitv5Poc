@@ -47,7 +47,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var childprocess = require("child_process");
-var electron_1 = require("electron");
 var fs = require("fs-extra");
 var firebird = require("node-firebird");
 var path = require("path");
@@ -75,7 +74,8 @@ function asyncForEach(array, callback) {
     });
 }
 var Project = /** @class */ (function () {
-    function Project() {
+    function Project(event) {
+        this.event = event;
         this.C_CHEMIN_BASE = path.resolve(__dirname + "\\..");
         this.C_CHEMIN_BASE_SCRIPT_SQL = this.C_CHEMIN_BASE + "\\sql";
         this.C_OPTIONS_PHA = {
@@ -123,12 +123,11 @@ var Project = /** @class */ (function () {
                                         p.push(db);
                                     }
                                     Array.prototype.push.apply(p, ['-i', sql]);
-                                    electron_1.ipcMain.emit('message', { message: sql });
+                                    this.event.reply('message', { message: sql });
                                     return [4 /*yield*/, this.execFile(this.C_CHEMIN_BASE + "\\fb3\\isql.exe", p)];
                                 case 1:
                                     _a.sent();
                                     this.log.info("Execution du script " + sql);
-                                    //output._console(output.chalk.blueBright(new Date().toISOString()), `Execution du script ${sql}`);
                                     resolve();
                                     return [2 /*return*/];
                             }
@@ -206,14 +205,8 @@ var Project = /** @class */ (function () {
                         var _this = this;
                         return __generator(this, function (_a) {
                             this.log.info('Creation DB');
-                            //output._console(output.chalk.blueBright('Creation DB'));
                             firebird.create(pha, function (err, db) {
                                 _this.log.info('Database Created', pha.database, output_1.chalk.greenBright.bold('OK'));
-                                /* output._console(
-                                  output.chalk.blueBright('database created'),
-                                  output.chalk.redBright.bold.underline(pha.database),
-                                  output.chalk.greenBright.blue('OK')
-                                ); */
                                 resolve();
                             });
                             return [2 /*return*/];
@@ -253,7 +246,21 @@ var Project = /** @class */ (function () {
             });
         });
     };
-    Project.prototype.open = function (directory) {
+    Project.prototype.loadModule = function (type, module) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.log.log('loadModule', type, module);
+                if (module && module.length !== 0) {
+                    try {
+                        return [2 /*return*/, require("../modules/" + type + "/" + module + "/" + module)];
+                    }
+                    catch (error) { }
+                }
+                return [2 /*return*/];
+            });
+        });
+    };
+    Project.prototype.create = function (directory) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
@@ -268,27 +275,22 @@ var Project = /** @class */ (function () {
                                     _c.trys.push([1, 6, , 7]);
                                     pha.database = "" + directory + pha.database;
                                     pha.commit = JSON.parse(fs.readFileSync(directory + "\\commit.pj4").toString());
-                                    this.log.info('Pha Created');
-                                    //output._console(output.chalk.blueBright('Pha created'));
                                     _a = pha.commit.module_import;
                                     return [4 /*yield*/, this.getTreatments('import', pha.commit.module_import.nom)];
                                 case 2:
-                                    //output._console(output.chalk.blueBright('Pha created'));
                                     _a.groupes = _c.sent();
                                     _b = pha.commit.module_transfert;
                                     return [4 /*yield*/, this.getTreatments('transfert', pha.commit.module_transfert.nom)];
                                 case 3:
                                     _b.groupes = _c.sent();
                                     pha.commit.informations_generales.folder = directory;
-                                    this.log.info('Pha Loaded');
-                                    //output._console(output.chalk.redBright('Pha loaded'));
                                     return [4 /*yield*/, this.createDatabase(pha)];
                                 case 4:
-                                    //output._console(output.chalk.redBright('Pha loaded'));
                                     _c.sent();
                                     return [4 /*yield*/, this.executeScripts(pha)];
                                 case 5:
                                     _c.sent();
+                                    this.event.reply('popup', { message: "Projet " + pha.commit.informations_generales.folder + " cr\u00E9\u00E9" });
                                     resolve(pha);
                                     return [3 /*break*/, 7];
                                 case 6:
@@ -302,12 +304,59 @@ var Project = /** @class */ (function () {
             });
         });
     };
+    Project.prototype.open = function (directory) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                        var pha, _a, _b, error_2;
+                        return __generator(this, function (_c) {
+                            switch (_c.label) {
+                                case 0:
+                                    pha = __assign({}, this.C_OPTIONS_PHA);
+                                    _c.label = 1;
+                                case 1:
+                                    _c.trys.push([1, 4, , 5]);
+                                    pha.database = "" + directory + pha.database;
+                                    pha.commit = JSON.parse(fs.readFileSync(directory + "\\commit.pj4").toString());
+                                    this.log.info('Pha Created');
+                                    _a = pha.commit.module_import;
+                                    return [4 /*yield*/, this.getTreatments('import', pha.commit.module_import.nom)];
+                                case 2:
+                                    _a.groupes = _c.sent();
+                                    _b = pha.commit.module_transfert;
+                                    return [4 /*yield*/, this.getTreatments('transfert', pha.commit.module_transfert.nom)];
+                                case 3:
+                                    _b.groupes = _c.sent();
+                                    pha.commit.informations_generales.folder = directory;
+                                    this.log.info('Pha Loaded');
+                                    resolve(pha);
+                                    return [3 /*break*/, 5];
+                                case 4:
+                                    error_2 = _c.sent();
+                                    reject(error_2);
+                                    return [3 /*break*/, 5];
+                                case 5: return [2 /*return*/];
+                            }
+                        });
+                    }); })];
+            });
+        });
+    };
     Project.prototype.execute = function (directory, type, id) {
         return __awaiter(this, void 0, void 0, function () {
-            var prj;
+            var prj, m;
             return __generator(this, function (_a) {
-                this.open(directory).then(function (pha) { return (prj = pha); });
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        this.open(directory).then(function (pha) { return (prj = pha); });
+                        if (!prj) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.loadModule(type, prj.commit.module_import.nom)];
+                    case 1:
+                        m = _a.sent();
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
+                }
             });
         });
     };

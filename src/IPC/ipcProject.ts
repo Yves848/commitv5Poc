@@ -1,31 +1,46 @@
-import { ipcMain } from 'electron';
+import { BrowserWindow, ipcMain } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 
 import { IcreateProject } from '../models/IGeneral';
 import { ProjectFile } from '../models/IProject';
 import { Modules, modulespays } from '../models/ITypesModules';
-import * as output from '../utils/output';
+import { chalk, LogBase } from '../utils/output';
 import { Project } from './../../srv/project';
-import { _console } from './../utils/output';
 
 export class IPCProjects {
   modules: Modules = modulespays;
   projectFile: ProjectFile;
   project: Project;
+  log: LogBase;
 
+  constructor(private mainWindow: BrowserWindow) {
+    this.log = new LogBase();
+  }
   start() {
-    _console(output.chalk.greenBright.bold('IPCProjects - Start'), output.chalk.bgWhiteBright.green('Ok'));
+    this.log.info('IPCProjects - Start', chalk.bgWhiteBright.green('Ok'));
 
     // Définition des évènements
-    ipcMain.on('create-project', (event, data: IcreateProject) => {
+    ipcMain.on('create-project', async (event, data: IcreateProject) => {
+      this.log.info('create-project - senderId', event.sender.id);
       this.createProjectFile(event, data);
     });
+
+    ipcMain.on('open-project', (event: Electron.IpcMainEvent, data: IcreateProject) => {
+      this.log.info('open-project - senderId', event.sender.id);
+      this.openProject(event, data);
+    });
+  }
+
+  openProject(event: Electron.IpcMainEvent, data: IcreateProject) {
+    this.log.info('openProject', data.projectName);
+    event.reply('popup', { message: `Projet ${data.projectName} ouvert` });
+    event.returnValue = '';
   }
 
   // Méthodes ....
   createProjectFile(event: Electron.IpcMainEvent, data: IcreateProject) {
-    output._console(output.chalk.redBright('create-project'), data);
+    this.log.info('createProjectFile', data);
     const module = modulespays.modulesPays.filter(m => {
       return m.pays === data.pays;
     });
@@ -57,12 +72,12 @@ export class IPCProjects {
     };
 
     fs.writeFileSync(path.join(`${data.projectName}\\commit.pj4`), JSON.stringify(this.projectFile));
-    this.createProject(data.projectName);
+    this.createProject(event, data.projectName);
     event.returnValue = path.join(`${data.projectName}`);
   }
 
-  createProject(directory: string) {
-    this.project = new Project();
-    this.project.open(directory);
+  async createProject(event: Electron.IpcMainEvent, directory: string) {
+    this.project = new Project(event);
+    this.project.create(directory);
   }
 }
