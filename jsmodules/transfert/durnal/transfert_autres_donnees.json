@@ -1,0 +1,106 @@
+[
+    {
+        "id" : "comments",
+        "libelle" : "Commentaires",
+        "url" : "/durnal-comments/v1/comments/bulkInsert",
+        "methode" : "POST",
+        "parametresURL" : [
+            { "tenantId" : "{tenantId}" }
+        ],
+        "methodeTransformation" : "",
+        "template" :
+            {
+                "entityId": "string",
+                "category": "PRODUCT",
+                "companyId": 0,
+                "date": null,
+                "tags": [
+                {
+                    "code": "product.sale",
+                    "uuid": null
+                }
+                ],
+                "text": "string",
+                "userId": null,
+                "uuid": null
+            },
+        "procedureSelection" : "pk_durnal.commentaire",
+        "procedureCorrespondance" : "",
+        "tailleQueue" : 10,
+        "taillePaquet" : 43
+    },
+    {
+        "id" : "sales_history",
+        "libelle" : "Historique délivrances",
+        "url" : "/durnal-sale/v1/reprise/histovente",
+        "parametresURL" : [
+            { "tenantId" : "{tenantId}" }
+        ],
+        "methode" : "PUT",
+        "methodeTransformation" : "",
+        "template" :
+            {
+                "dateActe": "string",
+                "dateOrdonnance": "string",
+                "idClient": "string",
+                "idOperateur": "string",
+                "idOrigine": "string",
+                "lignes": [
+                    {
+                        "typeCodeProduit": 0,
+                        "produit": "string",
+                        "designationProduit": "string",
+                        "quantite": "string",
+                        "prixAchat": 0,
+                        "prixAchatRemise": 0,
+                        "prixVente": 0
+                    }
+                ],
+                "typeCodePraticien": 0,
+                "praticien": "string",
+                "nomPraticien": "string",
+                "prenomPraticien": "string",
+                "numeroFacture": "string"
+            },
+        "procedureSelection" : "pk_durnal.histo_delivrance",
+        "procedureCorrespondance" : "",
+        "tailleQueue" : 10,
+        "taillePaquet" : 43
+    },
+    {
+        "id" : "orders_history",
+        "libelle" : "Achats",
+        "url" : "/durnal-achats/v1/imports/recover/order",
+        "methode" : "POST",
+        "methodeTransformation" : "",
+        "template" :
+            {
+                "comment": "string",
+                "createDate": "2019-05-21T13:58:43.571Z",
+                "orderLineRecoveryDtoList": [
+                    {
+                        "discount": 0,
+                        "discountedProductPrice": 0,
+                        "freeUnits": 0,
+                        "pharmacyId": 0,
+                        "productCode": "string",
+                        "productId": "string",
+                        "productName": "string",
+                        "productPrice": 0,
+                        "quantity": 0,
+                        "receivedQuantity": 0,
+                        "typeCode": "NUM_NATIONAL",
+                        "vatRate": 0
+                    }
+                ],
+                "pharmacyId": 0,
+                "receiptDate": "2019-05-21T13:58:43.571Z",
+                "status": "IN_PROGRESS",
+                "supplierId": "string"
+            },
+        "procedureSelection" : "pk_durnal.achat",
+        "procedureCorrespondance" : "",
+        "tailleQueue" : 1,
+        "taillePaquet" : 43
+    }
+]

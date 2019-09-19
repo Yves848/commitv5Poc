@@ -69,16 +69,30 @@ var IPCProjects = /** @class */ (function () {
                 return [2 /*return*/];
             });
         }); });
-        electron_1.ipcMain.on('open-project', function (event, data) {
-            _this.log.info('open-project - senderId', event.sender.id);
-            _this.openProject(event, data);
-        });
+        electron_1.ipcMain.on('open-project', function (event, data) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.log.info('open-project - senderId', event.sender.id);
+                        return [4 /*yield*/, this.openProject(event, data)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
     };
     IPCProjects.prototype.openProject = function (event, data) {
-        this.log.info('openProject', data.projectName);
-        this.mainWindow.webContents.send('popup', 'test');
-        //event.reply('popup', { message: `Projet ${data.projectName} ouvert` });
-        event.returnValue = '';
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                this.log.info('openProject', data.projectName);
+                this.project = new project_1.Project(event);
+                this.project.open(data.projectName);
+                event.reply('popup', { message: "Projet " + data.projectName + " ouvert" });
+                event.returnValue = '';
+                return [2 /*return*/];
+            });
+        });
     };
     // Méthodes ....
     IPCProjects.prototype.createProjectFile = function (event, data) {

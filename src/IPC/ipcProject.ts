@@ -26,14 +26,16 @@ export class IPCProjects {
       this.createProjectFile(event, data);
     });
 
-    ipcMain.on('open-project', (event: Electron.IpcMainEvent, data: IcreateProject) => {
+    ipcMain.on('open-project', async (event: Electron.IpcMainEvent, data: IcreateProject) => {
       this.log.info('open-project - senderId', event.sender.id);
-      this.openProject(event, data);
+      await this.openProject(event, data);
     });
   }
 
-  openProject(event: Electron.IpcMainEvent, data: IcreateProject) {
+  async openProject(event: Electron.IpcMainEvent, data: IcreateProject) {
     this.log.info('openProject', data.projectName);
+    this.project = new Project(event);
+    this.project.open(data.projectName);
     event.reply('popup', { message: `Projet ${data.projectName} ouvert` });
     event.returnValue = '';
   }

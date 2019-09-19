@@ -1,0 +1,11 @@
+[
+    {
+        "id" : "durnal_practitioners",
+        "libelle" : "Praticiens",
+        "methode" : "GET",
+        "url" : "/durnal-practitioners/v1/practitioners",
+        "methodeTransformation" : "transformations.transformerPraticien",
+        "procedureSelection" : "",
+        "procedureCorrespondance" : "pk_durnal.creer_correspondance_praticien"
+    }
+]

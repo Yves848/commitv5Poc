@@ -117,8 +117,15 @@ export class Project {
     this.log.log('loadModule', type, module);
     if (module && module.length !== 0) {
       try {
-        return require(`../modules/${type}/${module}/${module}`);
-      } catch (error) {}
+        //return require(`../modules/${type}/${module}/${module}`);
+        import(`../modules/${type}/${module}/${module}`).then(m => {
+          const _module = { ...m };
+          this.log.info(module);
+          return _module;
+        });
+      } catch (error) {
+        return error;
+      }
     }
   }
 
@@ -159,12 +166,17 @@ export class Project {
     });
   }
 
-  async execute(directory, type, id) {
+  async execute(directory, type = 'import', id?) {
     let prj: OptionsPHA;
-    this.open(directory).then(pha => (prj = pha));
-    // Attention => faire la gestion de l'exception
-    if (prj) {
-      const m = await this.loadModule(type, prj.commit.module_import.nom);
-    }
+    this.log.info('execute', directory);
+    this.open(directory).then(async pha => {
+      prj = { ...pha };
+      this.log.info('Before loadModule', prj);
+      // Attention => faire la gestion de l'exception
+      if (prj) {
+        const m = await this.loadModule(type, prj.commit.module_import.nom);
+        this.log.info('module', m);
+      }
+    });
   }
 }

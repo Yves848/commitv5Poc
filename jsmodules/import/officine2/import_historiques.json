@@ -1,0 +1,6 @@
+[
+    { "id" : "officine2_sales_history","libelle" : "Historiques/Historique délivrances", "sqlSelect" : "histo_delivrances.sql", "sqlInsert": "pk_officine2.creer_historique" },
+    { "id" : "officine2_sales_history_lines","libelle" : "Historiques/Historique délivrances lignes", "sqlSelect" : "histo_delivrances_lignes.sql", "sqlInsert": "pk_officine2.creer_historique_ligne" },
+    { "id" : "officine2_orders_history","libelle" : "Historiques/Historique commandes", "sqlSelect" : "commandes.sql", "sqlInsert": "pk_officine2.creer_commande" },
+    { "id" : "officine2_orders_history_lines","libelle" : "Historiques/Historique commandes lignes", "sqlSelect" : "commandes_lignes.sql", "sqlInsert": "pk_officine2.creer_commande_ligne" }
+]

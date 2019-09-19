@@ -248,13 +248,21 @@ var Project = /** @class */ (function () {
     };
     Project.prototype.loadModule = function (type, module) {
         return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
             return __generator(this, function (_a) {
                 this.log.log('loadModule', type, module);
                 if (module && module.length !== 0) {
                     try {
-                        return [2 /*return*/, require("../modules/" + type + "/" + module + "/" + module)];
+                        //return require(`../modules/${type}/${module}/${module}`);
+                        Promise.resolve().then(function () { return require("../modules/" + type + "/" + module + "/" + module); }).then(function (m) {
+                            var _module = __assign({}, m);
+                            _this.log.info(module);
+                            return _module;
+                        });
                     }
-                    catch (error) { }
+                    catch (error) {
+                        return [2 /*return*/, error];
+                    }
                 }
                 return [2 /*return*/];
             });
@@ -344,19 +352,30 @@ var Project = /** @class */ (function () {
         });
     };
     Project.prototype.execute = function (directory, type, id) {
+        if (type === void 0) { type = 'import'; }
         return __awaiter(this, void 0, void 0, function () {
-            var prj, m;
+            var prj;
+            var _this = this;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        this.open(directory).then(function (pha) { return (prj = pha); });
-                        if (!prj) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.loadModule(type, prj.commit.module_import.nom)];
-                    case 1:
-                        m = _a.sent();
-                        _a.label = 2;
-                    case 2: return [2 /*return*/];
-                }
+                this.log.info('execute', directory);
+                this.open(directory).then(function (pha) { return __awaiter(_this, void 0, void 0, function () {
+                    var m;
+                    return __generator(this, function (_a) {
+                        switch (_a.label) {
+                            case 0:
+                                prj = __assign({}, pha);
+                                this.log.info('Before loadModule', prj);
+                                if (!prj) return [3 /*break*/, 2];
+                                return [4 /*yield*/, this.loadModule(type, prj.commit.module_import.nom)];
+                            case 1:
+                                m = _a.sent();
+                                this.log.info('module', m);
+                                _a.label = 2;
+                            case 2: return [2 /*return*/];
+                        }
+                    });
+                }); });
+                return [2 /*return*/];
             });
         });
     };

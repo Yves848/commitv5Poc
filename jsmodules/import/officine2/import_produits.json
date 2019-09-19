@@ -1,0 +1,12 @@
+[
+    { "id" : "officine2_wholesalers", "libelle" : "Grossistes", "sqlSelect" : "grossistes.sql", "sqlInsert": "pk_officine2.creer_grossiste" },
+    { "id" : "officine2_products", "libelle" : "Produits", "sqlSelect" : "produits.sql", "sqlInsert": "pk_officine2.creer_produit" },
+    { "id" : "officine2_lux_informations", "libelle" : "Informations produits spécifiques Luxembourg", "sqlSelect" : "infos_produits_lux.sql", "sqlInsert": "pk_officine2.creer_info_produit_lux" },
+    { "id" : "officine2_products_lapsing", "libelle" : "Produits/Peremptions", "sqlSelect" : "produits_peremptions.sql", "sqlInsert": "pk_officine2.creer_date_peremption" },
+    { "id" : "officine2_products_codes", "libelle" : "Produits/Codes", "sqlSelect" : "produits_codes.sql", "sqlInsert": "pk_officine2.creer_code_produit" },
+    { "id" : "officine2_representives", "libelle" : "Représentants", "sqlSelect" : "representants.sql", "sqlInsert": "pk_officine2.creer_representant" },
+    { "id" : "officine2_representives_products", "libelle" : "Représentants/Produits", "sqlSelect" : "representants_produits.sql", "sqlInsert": "pk_officine2.creer_representant_produit" },
+    { "id" : "officine2_chemical", "libelle" : "Chimiques", "sqlSelect" : "chimiques.sql", "sqlInsert": "pk_officine2.creer_chimique" },
+    { "id" : "officine2_preparations","libelle" : "Préparations", "sqlSelect" : "preparations.sql", "sqlInsert": "pk_officine2.creer_preparation" },
+    { "id" : "officine2_preparations_components", "libelle" : "Préparations/Composants", "sqlSelect" : "composants_preparations.sql", "sqlInsert": "pk_officine2.creer_composant_preparation" }
+]

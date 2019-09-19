@@ -1,0 +1,6 @@
+[
+    { "id" : "officine2_accounts", "libelle" : "Comptes", "sqlSelect" : "comptes.sql", "sqlInsert": "pk_officine2.creer_compte" },
+    { "id" : "officine2_referent_customers", "libelle" : "Clients Référents", "sqlSelect" : "clients_referents.sql", "sqlInsert": "pk_officine2.creer_client" },
+    { "id" : "officine2_customers", "libelle" : "Clients/Patients", "sqlSelect" : "clients.sql", "sqlInsert": "pk_officine2.creer_client" },
+    { "id" : "officine2_customers_practitioners", "libelle" : "Liens Clients/Médecins", "sqlSelect" : "clients_medecins.sql", "sqlInsert": "pk_officine2.creer_client_medecin" }
+]

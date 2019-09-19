@@ -17,7 +17,8 @@
     ]
   },
   "include": [
-    "main.ts"
+    "main.ts",
+    "modules/**/*.ts"
   ],
   "exclude": [
     "node_modules",
