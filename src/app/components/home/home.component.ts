@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { ElectronService } from 'ngx-electron';
 import { IcreateProject } from 'src/models/IGeneral';
@@ -23,20 +23,26 @@ export class HomeComponent implements OnInit {
 
   messages: string[] = [];
 
-  constructor(public dialog: MatDialog, private els: ElectronService, private snack: MatSnackBar, private firebird: FirebirdService) {
+  constructor(
+    public dialog: MatDialog,
+    private els: ElectronService,
+    private snack: MatSnackBar,
+    private firebird: FirebirdService,
+    private ngZone: NgZone
+  ) {
     this.els.ipcRenderer.on('message', (event, data) => {
-      this.firebird.setMessage(data.message);
+      this.ngZone.run(() => this.firebird.setMessage(data.message));
     });
 
     this.els.ipcRenderer.on('popup', (event, data) => {
       console.log(data.message);
-      this.snack.open(`${data.message}`, 'Info', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'left' });
+      this.ngZone.run(() => this.snack.open(`${data.message}`, 'Info', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'left' }));
     });
 
     this.firebird._message.subscribe(message => {
       if (message) {
         console.log(message);
-        this.messages.push(message);
+        this.ngZone.run(() => this.messages.push(message));
       }
     });
   }
@@ -59,7 +65,6 @@ export class HomeComponent implements OnInit {
         this.els.ipcRenderer.send('create-project', res);
       }
     });
-    this.messages.push('Démarré');
     console.log('démarré');
   }
 

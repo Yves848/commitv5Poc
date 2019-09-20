@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ElectronService } from 'ngx-electron';
 
 import { ProjectsService } from '../../services/projects.service';
@@ -10,7 +10,7 @@ import { FilesService } from './../../services/files.service';
   styleUrls: ['./test.component.scss'],
 })
 export class TestComponent implements OnInit {
-  constructor(private fileService: FilesService, private projectService: ProjectsService, private els: ElectronService) {}
+  constructor(private fileService: FilesService, private projectService: ProjectsService, private els: ElectronService, private ngZone: NgZone) {}
 
   files = [];
   sPath = 'c:\\';
@@ -24,7 +24,7 @@ export class TestComponent implements OnInit {
 
     this.els.ipcRenderer.on('new-file', (event, file) => {
       console.log(file);
-      this.fileService.setFile(file);
+      this.ngZone.run(() => this.fileService.setFile(file));
     });
   }
 
