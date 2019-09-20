@@ -5,9 +5,12 @@
   <mat-grid-tile [colspan]="8">
     <button id="ouvrirProjet" mat-raised-button (click)="openProject()">Ouvrir Projet</button>
   </mat-grid-tile>
+  <mat-grid-tile [colspan]="4">
+    <div cdk-scrollable>
+      <ul id="status" *ngIf="messages.length > 0">
+        <li *ngFor="let message of messages">{{message}}</li>
+      </ul>
+    </div>
+  </mat-grid-tile>
 
 </mat-grid-list>
-
-<ul id="status" *ngIf="messages.length > 0">
-  <li *ngFor="let message of messages">{{message}}</li>
-</ul>

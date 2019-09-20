@@ -5,12 +5,14 @@ var path = require("path");
 var url = require("url");
 var ipcMain_1 = require("./src/IPC/ipcMain");
 var ipcProject_1 = require("./src/IPC/ipcProject");
+var output_1 = require("./src/utils/output");
 var mainWindow;
 var serve;
 var ipcFiles;
 var ipcProjects;
 var args = process.argv.slice(1);
 serve = args.some(function (val) { return val === '--serve'; });
+var log = new output_1.LogBase();
 function createWindow() {
     mainWindow = new electron_1.BrowserWindow({
         width: 800,
@@ -46,7 +48,11 @@ function createWindow() {
         mainWindow = null;
     });
 }
-electron_1.app.on('ready', createWindow);
+electron_1.app.on('ready', function () {
+    output_1.bigText('Commit5', 'blueBright').then(function () {
+        createWindow();
+    });
+});
 electron_1.app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
         electron_1.app.quit();

@@ -7,13 +7,14 @@ export const colorText = (text: any, color: Chalk.StyleFunction) => {
   return color(text);
 };
 
-export const bigText = (text: string, color: string = 'white') => {
-  figlet(text, (error: any, data: any) => {
+export const bigText = async (text: string, color: string = 'white') => {
+  figlet(text, async (error: any, data: any) => {
     if (error) {
       return process.exit(1);
     }
     console.log(chalk[color](data));
   });
+  return null;
 };
 
 export class LogBase {

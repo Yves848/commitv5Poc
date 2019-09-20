@@ -4,6 +4,7 @@ import * as url from 'url';
 
 import { IpcFiles } from './src/IPC/ipcMain';
 import { IPCProjects } from './src/IPC/ipcProject';
+import { bigText, LogBase } from './src/utils/output';
 
 let mainWindow: BrowserWindow;
 let serve: any;
@@ -12,6 +13,7 @@ let ipcProjects: IPCProjects;
 
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
+const log = new LogBase();
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -57,7 +59,11 @@ function createWindow() {
   });
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  bigText('Commit5', 'blueBright').then(() => {
+    createWindow();
+  });
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
