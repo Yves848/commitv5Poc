@@ -22,6 +22,16 @@ export class IpcFiles {
       event.returnValue = files;
     });
 
+    ipcMain.on('get-files', (event, data) => {
+      const path = data;
+      fs.readdir(path, (err, files) => {
+        files.forEach(file => {
+          this.log.info(file);
+          event.reply('new-file', file);
+        });
+      });
+    });
+
     ipcMain.on('browse-folder', (event, data) => {
       this.log.log('IPCMain ts [browse-folder]', data);
 

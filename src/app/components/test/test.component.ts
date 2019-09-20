@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ElectronService } from 'ngx-electron';
 
 import { ProjectsService } from '../../services/projects.service';
 import { FilesService } from './../../services/files.service';
@@ -9,20 +10,31 @@ import { FilesService } from './../../services/files.service';
   styleUrls: ['./test.component.scss'],
 })
 export class TestComponent implements OnInit {
-  constructor(private fileService: FilesService, private projectService: ProjectsService) {}
+  constructor(private fileService: FilesService, private projectService: ProjectsService, private els: ElectronService) {}
+
   files = [];
   sPath = 'c:\\';
 
   ngOnInit() {
-    console.log('nginit');
+    this.fileService._file.subscribe(file => {
+      if (file) {
+        this.files.push(file);
+      }
+    });
+
+    this.els.ipcRenderer.on('new-file', (event, file) => {
+      console.log(file);
+      this.fileService.setFile(file);
+    });
   }
 
   sendMsg() {
     console.log('sendMsg');
     this.files = [];
-    this.fileService.listfiles(this.sPath).subscribe(result => {
+    /* this.fileService.listfiles(this.sPath).subscribe(result => {
       this.files = result;
-    });
+    }); */
+    this.fileService.getFiles(this.sPath);
   }
 
   newProject() {

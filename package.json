@@ -28,6 +28,7 @@
     "@angular/platform-browser-dynamic": "^8.0.1",
     "@angular/router": "^8.0.1",
     "@types/chalk": "^2.2.0",
+    "@types/ws": "^6.0.3",
     "ansi-colors": "^4.1.1",
     "bluebird": "^3.5.5",
     "chalk": "^2.4.2",

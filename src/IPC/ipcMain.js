@@ -19,6 +19,15 @@ var IpcFiles = /** @class */ (function () {
             var files = fs.readdirSync(data.path);
             event.returnValue = files;
         });
+        electron_1.ipcMain.on('get-files', function (event, data) {
+            var path = data;
+            fs.readdir(path, function (err, files) {
+                files.forEach(function (file) {
+                    _this.log.info(file);
+                    event.reply('new-file', file);
+                });
+            });
+        });
         electron_1.ipcMain.on('browse-folder', function (event, data) {
             _this.log.log('IPCMain ts [browse-folder]', data);
             var options = {

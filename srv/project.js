@@ -50,29 +50,8 @@ var childprocess = require("child_process");
 var fs = require("fs-extra");
 var firebird = require("node-firebird");
 var path = require("path");
+var hof_1 = require("../src/utils/hof");
 var output_1 = require("../src/utils/output");
-function asyncForEach(array, callback) {
-    return __awaiter(this, void 0, void 0, function () {
-        var index;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    index = 0;
-                    _a.label = 1;
-                case 1:
-                    if (!(index < array.length)) return [3 /*break*/, 4];
-                    return [4 /*yield*/, callback(array[index], index, array)];
-                case 2:
-                    _a.sent();
-                    _a.label = 3;
-                case 3:
-                    index++;
-                    return [3 /*break*/, 1];
-                case 4: return [2 /*return*/];
-            }
-        });
-    });
-}
 var Project = /** @class */ (function () {
     function Project(event) {
         this.event = event;
@@ -148,7 +127,7 @@ var Project = /** @class */ (function () {
                                 case 0:
                                     if (!(directory && fs.pathExistsSync(directory))) return [3 /*break*/, 2];
                                     files = fs.readdirSync(directory);
-                                    return [4 /*yield*/, asyncForEach(files, function (file) { return __awaiter(_this, void 0, void 0, function () {
+                                    return [4 /*yield*/, hof_1.asyncForEach(files, function (file) { return __awaiter(_this, void 0, void 0, function () {
                                             var sql;
                                             return __generator(this, function (_a) {
                                                 switch (_a.label) {
@@ -227,7 +206,7 @@ var Project = /** @class */ (function () {
                                 case 0:
                                     m = JSON.parse(fs.readFileSync(this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + module + ".json").toString());
                                     m2 = [];
-                                    return [4 /*yield*/, asyncForEach(m, function (p) {
+                                    return [4 /*yield*/, hof_1.asyncForEach(m, function (p) {
                                             var traitements;
                                             traitements = JSON.parse(fs.readFileSync(_this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + p.traitements).toString());
                                             m2.push({
@@ -253,7 +232,6 @@ var Project = /** @class */ (function () {
                 this.log.log('loadModule', type, module);
                 if (module && module.length !== 0) {
                     try {
-                        //return require(`../modules/${type}/${module}/${module}`);
                         Promise.resolve().then(function () { return require("../modules/" + type + "/" + module + "/" + module); }).then(function (m) {
                             var _module = __assign({}, m);
                             _this.log.info(module);
