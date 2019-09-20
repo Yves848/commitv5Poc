@@ -23,7 +23,7 @@ var IpcFiles = /** @class */ (function () {
             var path = data;
             fs.readdir(path, function (err, files) {
                 files.forEach(function (file) {
-                    _this.log.info(file);
+                    // this.log.info(file);
                     event.reply('new-file', file);
                 });
             });

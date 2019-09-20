@@ -26,7 +26,7 @@ export class IpcFiles {
       const path = data;
       fs.readdir(path, (err, files) => {
         files.forEach(file => {
-          this.log.info(file);
+          // this.log.info(file);
           event.reply('new-file', file);
         });
       });

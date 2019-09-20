@@ -16,24 +16,15 @@ export class TestComponent implements OnInit {
   sPath = 'c:\\';
 
   ngOnInit() {
-    this.fileService._file.subscribe(file => {
-      if (file) {
-        this.files.push(file);
-      }
-    });
-
     this.els.ipcRenderer.on('new-file', (event, file) => {
       console.log(file);
-      this.ngZone.run(() => this.fileService.setFile(file));
+      this.ngZone.run(() => this.files.push(file));
     });
   }
 
   sendMsg() {
     console.log('sendMsg');
     this.files = [];
-    /* this.fileService.listfiles(this.sPath).subscribe(result => {
-      this.files = result;
-    }); */
     this.fileService.getFiles(this.sPath);
   }
 

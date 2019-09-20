@@ -3,7 +3,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ElectronService } from 'ngx-electron';
 import { IcreateProject } from 'src/models/IGeneral';
 
-import { FirebirdService } from './../../services/firebird.service';
+import { InfoMainComponent } from './../snackbar/info-main/info-main.component';
 import { NewDialogComponent } from './new-dialog/new-dialog.component';
 
 @Component({
@@ -23,27 +23,17 @@ export class HomeComponent implements OnInit {
 
   messages: string[] = [];
 
-  constructor(
-    public dialog: MatDialog,
-    private els: ElectronService,
-    private snack: MatSnackBar,
-    private firebird: FirebirdService,
-    private ngZone: NgZone
-  ) {
+  constructor(public dialog: MatDialog, private els: ElectronService, private snack: MatSnackBar, private ngZone: NgZone) {
     this.els.ipcRenderer.on('message', (event, data) => {
-      this.ngZone.run(() => this.firebird.setMessage(data.message));
+      this.ngZone.run(() => this.messages.push(data.message));
     });
 
     this.els.ipcRenderer.on('popup', (event, data) => {
       console.log(data.message);
-      this.ngZone.run(() => this.snack.open(`${data.message}`, 'Info', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'left' }));
-    });
-
-    this.firebird._message.subscribe(message => {
-      if (message) {
-        console.log(message);
-        this.ngZone.run(() => this.messages.push(message));
-      }
+      // this.ngZone.run(() => this.snack.open(`${data.message}`, 'Info', { duration: 3000, verticalPosition: 'bottom', horizontalPosition: 'left' }));
+      this.ngZone.run(() =>
+        this.snack.openFromComponent(InfoMainComponent, { data: { message: data.message }, duration: 5000, panelClass: 'snack' })
+      );
     });
   }
 
