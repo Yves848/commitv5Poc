@@ -1,16 +1,11 @@
-<mat-grid-list cols="8">
-  <mat-grid-tile [colspan]="8">
-    <button id="nouveauProjet" mat-raised-button (click)="openDialog()">Nouveau Projet</button>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="8">
-    <button id="ouvrirProjet" mat-raised-button (click)="openProject()">Ouvrir Projet</button>
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="4">
-    <div id="list-status">
-      <ul *ngIf="messages.length > 0">
-        <li *ngFor="let message of messages">{{message}}</li>
-      </ul>
-    </div>
-  </mat-grid-tile>
+<div *ngIf="progress">
+  <mat-spinner></mat-spinner>
+  <div id="list-status">
+    <ul *ngIf="messages.length > 0">
+      <li *ngFor="let message of messages">{{message}}</li>
+    </ul>
+  </div>
 
-</mat-grid-list>
+</div>
+
+<!-- <img [src]="background" alt=""> -->

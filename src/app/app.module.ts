@@ -19,7 +19,6 @@ import { InfoMainComponent } from './components/snackbar/info-main/info-main.com
 import { TemplateComponent } from './components/snackbar/infoMain/template/template.component';
 import { TestComponent } from './components/test/test.component';
 import { GlobalMaterialModuleModule } from './global-material-module/global-material-module.module';
-import { TabletestComponent } from './tabletest/tabletest.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import { TabletestComponent } from './tabletest/tabletest.component';
     MenuComponent,
     ProjetComponent,
     NewDialogComponent,
-    TabletestComponent,
     InfoMainComponent,
     TemplateComponent,
   ],

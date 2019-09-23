@@ -43,6 +43,7 @@ export class IPCProjects {
   // Méthodes ....
   createProjectFile(event: Electron.IpcMainEvent, data: IcreateProject) {
     this.log.info('createProjectFile', data);
+    event.reply('progress');
     const module = modulespays.modulesPays.filter(m => {
       return m.pays === data.pays;
     });

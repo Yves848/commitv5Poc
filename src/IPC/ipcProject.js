@@ -97,6 +97,7 @@ var IPCProjects = /** @class */ (function () {
     // Méthodes ....
     IPCProjects.prototype.createProjectFile = function (event, data) {
         this.log.info('createProjectFile', data);
+        event.reply('progress');
         var module = ITypesModules_1.modulespays.modulesPays.filter(function (m) {
             return m.pays === data.pays;
         });
