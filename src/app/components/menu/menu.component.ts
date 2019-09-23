@@ -4,7 +4,6 @@ import { ElectronService } from 'ngx-electron';
 import { ProjectService } from 'src/app/services/project.service';
 import { IcreateProject } from 'src/models/IGeneral';
 
-import { InfosGen } from './../../../models/IProject';
 import { NewDialogComponent } from './../home/new-dialog/new-dialog.component';
 
 @Component({
@@ -15,7 +14,6 @@ import { NewDialogComponent } from './../home/new-dialog/new-dialog.component';
 export class MenuComponent implements OnInit {
   nom: string;
   createProject: IcreateProject;
-  project: InfosGen;
 
   messages: string[] = [];
 
@@ -50,24 +48,25 @@ export class MenuComponent implements OnInit {
     projectName = this.els.ipcRenderer.sendSync('browse-folder', { path: this.createProject.folderName });
     console.log('openProject - projectName ', projectName);
     this.projectService.project = this.els.ipcRenderer.sendSync('open-project', projectName);
-    console.log('openProject - this.project', this.projectService.project);
+    console.log('openProject - this.project', this.projectService.project.informations_generales);
   }
 
   projectLoaded(): boolean {
-    return this.projectService.project && this.projectService.project.folder !== '';
+    return this.projectService.project && this.projectService.project.informations_generales.folder !== '';
   }
 
   projectName(): string {
     let name = '';
-    if (this.projectService.project && this.projectService.project.folder !== '') {
-      name = `[ ${this.projectService.project.folder}]`;
-    }
+    try {
+      if (this.projectService.project && this.projectService.project.informations_generales.folder !== '') {
+        name = `[ ${this.projectService.project.informations_generales.folder}]`;
+      }
+    } catch (error) {}
 
     return name;
   }
 
   ngOnInit() {
     this.createProject = this.projectService.initProject();
-    this.project = this.projectService.project;
   }
 }

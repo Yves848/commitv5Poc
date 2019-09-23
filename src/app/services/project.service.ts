@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { IcreateProject } from './../../models/IGeneral';
-import { InfosGen } from './../../models/IProject';
+import { ProjectFile } from './../../models/IProject';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectService {
   createProject: IcreateProject;
-  project: InfosGen;
+  project: ProjectFile;
 
   constructor() {}
 
@@ -23,8 +23,8 @@ export class ProjectService {
     return { ...newProject };
   }
 
-  getProject() {
+  getProjectInfoGen() {
     console.log('getProject', this.project);
-    return this.project;
+    return this.project.informations_generales;
   }
 }

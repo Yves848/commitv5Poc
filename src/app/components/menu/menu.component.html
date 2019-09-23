@@ -2,14 +2,14 @@
   <mat-toolbar-row>
     <span>
       <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-      <button mat-button *ngIf="projectLoaded()">Import</button>
+      <button mat-button *ngIf="projectLoaded()" routerLink="/import">Import</button>
       <button mat-button *ngIf="projectLoaded()">Base Locale</button>
       <button mat-button *ngIf="projectLoaded()">Transfert</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="newProject()">Nouveau</button>
         <button mat-menu-item (click)="openProject()">Ouvrir</button>
         <hr>
-        <button mat-menu-item>Configuration</button>
+        <button mat-menu-item routerLink="/configuration">Configuration</button>
         <hr>
         <button mat-menu-item>Quitter</button>
       </mat-menu>

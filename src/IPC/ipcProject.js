@@ -95,7 +95,7 @@ var IPCProjects = /** @class */ (function () {
                     case 1:
                         pha = _a.sent();
                         this.log.info('openProject', pha.commit.informations_generales);
-                        event.returnValue = pha.commit.informations_generales;
+                        event.returnValue = pha.commit;
                         return [2 /*return*/];
                 }
             });
@@ -140,7 +140,7 @@ var IPCProjects = /** @class */ (function () {
                         return [4 /*yield*/, this.project.create(directory)];
                     case 1:
                         pha = _a.sent();
-                        event.returnValue = pha.commit.informations_generales;
+                        event.returnValue = pha.commit;
                         return [2 /*return*/];
                 }
             });

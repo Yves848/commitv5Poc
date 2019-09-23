@@ -5,7 +5,7 @@ import { ElectronService } from 'ngx-electron';
 import { ProjectService } from 'src/app/services/project.service';
 import { IcreateProject } from 'src/models/IGeneral';
 
-import { InfosGen } from './../../../models/IProject';
+import { ProjectFile } from './../../../models/IProject';
 import { InfoMainComponent } from './../snackbar/info-main/info-main.component';
 
 @Component({
@@ -16,7 +16,7 @@ import { InfoMainComponent } from './../snackbar/info-main/info-main.component';
 export class HomeComponent implements OnInit {
   nom: string;
   createproject: IcreateProject;
-  project: InfosGen;
+  project: ProjectFile;
   messages: string[] = [];
   progress = false;
   background: any = require('../../../assets/pharmagest.png');
