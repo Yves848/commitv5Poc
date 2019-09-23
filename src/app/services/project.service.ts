@@ -22,6 +22,7 @@ export class ProjectService {
   }
 
   getProject() {
+    console.log(this.project);
     return this.project;
   }
 }

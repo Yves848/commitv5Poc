@@ -45,17 +45,13 @@ export class MenuComponent implements OnInit {
   }
 
   openProject(): void {
-    this.project.folderName = './';
-    this.project.projectName = '';
-    this.project.import = '';
-    this.project.transfert = '';
-    this.project.pays = 'fr';
+    let projectName = '';
+    projectName = this.els.ipcRenderer.sendSync('browse-folder', { path: this.project.folderName });
+    console.log('openProject - projectName ', projectName);
+    this.project = this.els.ipcRenderer.sendSync('open-project', projectName);
+    // this.projectService.project = this.project;
 
-    this.project.projectName = this.els.ipcRenderer.sendSync('browse-folder', { path: this.project.folderName });
-    this.els.ipcRenderer.send('open-project', this.project);
-
-    this.messages.push('Démarré');
-    console.log('démarré');
+    console.log('project opened : ', this.project);
   }
 
   projectLoaded(): boolean {

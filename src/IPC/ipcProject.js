@@ -84,12 +84,13 @@ var IPCProjects = /** @class */ (function () {
     };
     IPCProjects.prototype.openProject = function (event, data) {
         return __awaiter(this, void 0, void 0, function () {
+            var project;
             return __generator(this, function (_a) {
-                this.log.info('openProject', data.projectName);
-                this.project = new project_1.Project(event);
-                this.project.open(data.projectName);
-                event.reply('popup', { message: "Projet " + data.projectName + " ouvert" });
-                event.returnValue = '';
+                this.log.info('openProject', data);
+                project = new project_1.Project(event);
+                project.open(data);
+                event.reply('popup', { message: "Projet " + data + " ouvert" });
+                event.returnValue = project;
                 return [2 /*return*/];
             });
         });

@@ -7,7 +7,7 @@
       <button mat-button *ngIf="projectLoaded()">Transfert</button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item (click)="newProject()">Nouveau</button>
-        <button mat-menu-item>Ouvrir</button>
+        <button mat-menu-item (click)="openProject()">Ouvrir</button>
         <hr>
         <button mat-menu-item>Configuration</button>
         <hr>

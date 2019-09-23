@@ -19,6 +19,8 @@ import { InfoMainComponent } from './components/snackbar/info-main/info-main.com
 import { TemplateComponent } from './components/snackbar/infoMain/template/template.component';
 import { TestComponent } from './components/test/test.component';
 import { GlobalMaterialModuleModule } from './global-material-module/global-material-module.module';
+import { ImportComponent } from './components/import/import.component';
+import { ConfigurationComponent } from './components/configuration/configuration.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { GlobalMaterialModuleModule } from './global-material-module/global-mate
     NewDialogComponent,
     InfoMainComponent,
     TemplateComponent,
+    ImportComponent,
+    ConfigurationComponent,
   ],
   imports: [
     BrowserModule,

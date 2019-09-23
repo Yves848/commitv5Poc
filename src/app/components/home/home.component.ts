@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import { ElectronService } from 'ngx-electron';
 import { ProjectService } from 'src/app/services/project.service';
 import { IcreateProject } from 'src/models/IGeneral';
@@ -23,7 +24,8 @@ export class HomeComponent implements OnInit {
     private els: ElectronService,
     private snack: MatSnackBar,
     private ngZone: NgZone,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private router: Router
   ) {
     if (this.els.isElectronApp) {
       this.els.ipcRenderer.on('progress', (event, data) => {
@@ -38,9 +40,10 @@ export class HomeComponent implements OnInit {
         console.log(data.message);
         this.progress = false;
         // this.ngZone.run(() => this.snack.open(`${data.message}`, 'Info', { duration: 3000, verticalPosition: 'bottom', horizontalPosition: 'left' }));
-        this.ngZone.run(() =>
-          this.snack.openFromComponent(InfoMainComponent, { data: { message: data.message }, duration: 5000, panelClass: 'snack' })
-        );
+        this.ngZone.run(() => {
+          this.snack.openFromComponent(InfoMainComponent, { data: { message: data.message }, duration: 5000, panelClass: 'snack' });
+          this.router.navigateByUrl('/configuration');
+        });
       });
     }
   }
