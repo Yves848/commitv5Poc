@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/services/project.service';
-import { IcreateProject } from 'src/models/IGeneral';
+
+import { InfosGen } from './../../../models/IProject';
 
 @Component({
   selector: 'app-configuration',
@@ -9,7 +10,7 @@ import { IcreateProject } from 'src/models/IGeneral';
 })
 export class ConfigurationComponent implements OnInit {
   openState = false;
-  project: IcreateProject;
+  project: InfosGen;
 
   constructor(private projectService: ProjectService) {
     this.project = this.projectService.getProject();

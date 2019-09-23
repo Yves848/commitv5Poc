@@ -84,14 +84,20 @@ var IPCProjects = /** @class */ (function () {
     };
     IPCProjects.prototype.openProject = function (event, data) {
         return __awaiter(this, void 0, void 0, function () {
-            var project;
+            var pha;
             return __generator(this, function (_a) {
-                this.log.info('openProject', data);
-                project = new project_1.Project(event);
-                project.open(data);
-                event.reply('popup', { message: "Projet " + data + " ouvert" });
-                event.returnValue = project;
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        this.log.info('openProject', data);
+                        this.project = new project_1.Project(event);
+                        event.reply('popup', { message: "Projet " + data + " ouvert" });
+                        return [4 /*yield*/, this.project.open(data)];
+                    case 1:
+                        pha = _a.sent();
+                        this.log.info('openProject', pha.commit.informations_generales);
+                        event.returnValue = pha.commit.informations_generales;
+                        return [2 /*return*/];
+                }
             });
         });
     };
@@ -126,10 +132,17 @@ var IPCProjects = /** @class */ (function () {
     };
     IPCProjects.prototype.createProject = function (event, directory) {
         return __awaiter(this, void 0, void 0, function () {
+            var pha;
             return __generator(this, function (_a) {
-                this.project = new project_1.Project(event);
-                this.project.create(directory);
-                return [2 /*return*/];
+                switch (_a.label) {
+                    case 0:
+                        this.project = new project_1.Project(event);
+                        return [4 /*yield*/, this.project.create(directory)];
+                    case 1:
+                        pha = _a.sent();
+                        event.returnValue = pha.commit.informations_generales;
+                        return [2 /*return*/];
+                }
             });
         });
     };

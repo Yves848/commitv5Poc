@@ -4,6 +4,7 @@ import { ElectronService } from 'ngx-electron';
 import { ProjectService } from 'src/app/services/project.service';
 import { IcreateProject } from 'src/models/IGeneral';
 
+import { InfosGen } from './../../../models/IProject';
 import { NewDialogComponent } from './../home/new-dialog/new-dialog.component';
 
 @Component({
@@ -13,7 +14,8 @@ import { NewDialogComponent } from './../home/new-dialog/new-dialog.component';
 })
 export class MenuComponent implements OnInit {
   nom: string;
-  project: IcreateProject;
+  createProject: IcreateProject;
+  project: InfosGen;
 
   messages: string[] = [];
 
@@ -36,38 +38,36 @@ export class MenuComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         // Sauver les infos du projet.....
-        this.project = res;
+        this.createProject = res;
         this.messages = [];
-        this.els.ipcRenderer.send('create-project', res);
+        this.projectService.project = this.els.ipcRenderer.sendSync('create-project', res);
       }
     });
-    console.log('démarré');
   }
 
   openProject(): void {
     let projectName = '';
-    projectName = this.els.ipcRenderer.sendSync('browse-folder', { path: this.project.folderName });
+    projectName = this.els.ipcRenderer.sendSync('browse-folder', { path: this.createProject.folderName });
     console.log('openProject - projectName ', projectName);
-    this.project = this.els.ipcRenderer.sendSync('open-project', projectName);
-    // this.projectService.project = this.project;
-
-    console.log('project opened : ', this.project);
+    this.projectService.project = this.els.ipcRenderer.sendSync('open-project', projectName);
+    console.log('openProject - this.project', this.projectService.project);
   }
 
   projectLoaded(): boolean {
-    return this.project.projectName !== '';
+    return this.projectService.project && this.projectService.project.folder !== '';
   }
 
   projectName(): string {
     let name = '';
-    if (this.project.projectName !== '') {
-      name = `[ ${this.project.projectName}]`;
+    if (this.projectService.project && this.projectService.project.folder !== '') {
+      name = `[ ${this.projectService.project.folder}]`;
     }
 
     return name;
   }
 
   ngOnInit() {
-    this.project = this.projectService.initProject();
+    this.createProject = this.projectService.initProject();
+    this.project = this.projectService.project;
   }
 }

@@ -34,10 +34,11 @@ export class IPCProjects {
 
   async openProject(event: Electron.IpcMainEvent, data: string) {
     this.log.info('openProject', data);
-    const project = new Project(event);
-    project.open(data);
+    this.project = new Project(event);
     event.reply('popup', { message: `Projet ${data} ouvert` });
-    event.returnValue = project;
+    const pha = await this.project.open(data);
+    this.log.info('openProject', pha.commit.informations_generales);
+    event.returnValue = pha.commit.informations_generales;
   }
 
   // Méthodes ....
@@ -81,6 +82,7 @@ export class IPCProjects {
 
   async createProject(event: Electron.IpcMainEvent, directory: string) {
     this.project = new Project(event);
-    this.project.create(directory);
+    const pha = await this.project.create(directory);
+    event.returnValue = pha.commit.informations_generales;
   }
 }
