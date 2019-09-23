@@ -45,6 +45,7 @@ function createWindow() {
       })
     );
   }
+  mainWindow.setMenu(null);
 
   mainWindow.maximize();
 

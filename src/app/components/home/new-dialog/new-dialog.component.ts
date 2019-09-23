@@ -48,6 +48,12 @@ export class NewDialogComponent implements OnInit {
 
   onPaysChange() {
     this.getModulesPays(this.data.pays);
+    if (this.nomsModulesImport.length === 1) {
+      this.data.import = this.nomsModulesImport[0];
+    }
+    if (this.nomsModulesTransfert.length === 1) {
+      this.data.transfert = this.nomsModulesTransfert[0];
+    }
   }
 
   browseFolder() {

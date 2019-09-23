@@ -39,6 +39,7 @@ function createWindow() {
             slashes: true,
         }));
     }
+    mainWindow.setMenu(null);
     mainWindow.maximize();
     mainWindow.webContents.openDevTools();
     if (serve) {
