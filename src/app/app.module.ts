@@ -21,6 +21,7 @@ import { TestComponent } from './components/test/test.component';
 import { GlobalMaterialModuleModule } from './global-material-module/global-material-module.module';
 import { ImportComponent } from './components/import/import.component';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
+import { ImportGroupComponent } from './components/import/import-group/import-group.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ConfigurationComponent } from './components/configuration/configuration
     TemplateComponent,
     ImportComponent,
     ConfigurationComponent,
+    ImportGroupComponent,
   ],
   imports: [
     BrowserModule,

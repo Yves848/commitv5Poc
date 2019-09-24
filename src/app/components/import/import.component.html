@@ -1,4 +1,3 @@
-<div>
-  {{folderName()}}
-  <p *ngFor="let groupe of modulesImport">{{groupe}}</p>
-</div>
+<mat-accordion>
+  <app-import-group *ngFor="let groupe of modulesImport" [groupe]="groupe"></app-import-group>
+</mat-accordion>

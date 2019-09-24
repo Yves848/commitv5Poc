@@ -97,10 +97,11 @@ export class Project {
       const m2: Groupes[] = [];
       await asyncForEach(m, (p: ProjectGroup) => {
         let traitements: Traitement[];
+        // console.log('groupe', p);
         traitements = JSON.parse(fs.readFileSync(`${this.C_CHEMIN_BASE}/modules/${type}/${module}/${p.traitements}`).toString());
         m2.push({
-          libelle: p.libelle,
-          Suppression: p.Suppression,
+          libelleGroupe: p.libelleGroupe,
+          procedureSuppression: p.procedureSuppression,
           traitements,
         });
       });

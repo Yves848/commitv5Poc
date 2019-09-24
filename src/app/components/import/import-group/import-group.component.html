@@ -1,0 +1,8 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    {{ groupe.libelleGroupe }}
+  </mat-expansion-panel-header>
+  <div *ngFor="let t of traitements">
+    {{t.libelle}}
+  </div>
+</mat-expansion-panel>

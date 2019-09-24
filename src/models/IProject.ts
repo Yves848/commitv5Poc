@@ -36,14 +36,14 @@ export interface Resultats {
 }
 
 export interface ProjectGroup {
-  libelle: string;
-  Suppression: string;
+  libelleGroupe: string;
+  procedureSuppression: string;
   traitements: string;
 }
 
 export interface Groupes {
-  libelle: string;
-  Suppression: string;
+  libelleGroupe: string;
+  procedureSuppression: string;
   traitements: Traitement[];
 }
 

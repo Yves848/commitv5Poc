@@ -10,11 +10,17 @@ import { Groupes } from './../../../models/IProject';
 })
 export class ImportComponent implements OnInit {
   modulesImport: Groupes[];
+  traitements: string[];
   constructor(private projectService: ProjectService) {}
 
   ngOnInit() {
     this.modulesImport = this.projectService.project.module_import.groupes;
-    console.log('import', this.modulesImport);
+    this.projectService.project.module_import.groupes.forEach(groupe => {
+      console.log('groupe - libelle', groupe.libelleGroupe);
+      groupe.traitements.forEach(traitement => {
+        console.log('   traitements', traitement.libelle);
+      });
+    });
   }
 
   folderName() {
