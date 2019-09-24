@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { asyncForEach } from 'src/utils/hof';
 
 import { Groupes, Traitement } from './../../../../models/IProject';
 
@@ -13,11 +12,11 @@ export class ImportGroupComponent implements OnInit {
   groupe: Groupes;
 
   traitements: Traitement[] = [];
+  displayedColumns: string[] = ['id', 'libelle'];
   constructor() {}
 
   async ngOnInit() {
-    await asyncForEach(this.groupe.traitements, traitement => {
-      this.traitements.push(traitement);
-    });
+    console.log('Groupe', this.groupe.libelleGroupe);
+    this.traitements = this.groupe.traitements;
   }
 }
