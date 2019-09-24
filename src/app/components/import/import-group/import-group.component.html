@@ -5,11 +5,23 @@
   <table mat-table [dataSource]="traitements">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>No.</th>
-      <td mat-cell *matCellDef="let index = index">{{ index }}</td>
+      <td mat-cell *matCellDef="let index = index">{{ index + 1 }}</td>
     </ng-container>
     <ng-container matColumnDef="libelle">
       <th mat-header-cell *matHeaderCellDef>Libellé</th>
       <td mat-cell *matCellDef="let traitement">{{ traitement.libelle }}</td>
+    </ng-container>
+    <ng-container matColumnDef="succes">
+      <th mat-header-cell *matHeaderCellDef>Succès</th>
+      <td mat-cell *matCellDef="let traitement">{{ traitement.resultat ? traitement.resultat.succes : 0 }}</td>
+    </ng-container>
+    <ng-container matColumnDef="avertissements">
+      <th mat-header-cell *matHeaderCellDef>Avertissements</th>
+      <td mat-cell *matCellDef="let traitement">{{ traitement.resultat ? traitement.resultat.avertissements : 0 }}</td>
+    </ng-container>
+    <ng-container matColumnDef="erreurs">
+      <th mat-header-cell *matHeaderCellDef>Erreurs</th>
+      <td mat-cell *matCellDef="let traitement">{{ traitement.resultat ? traitement.resultat.erreurs : 0 }}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

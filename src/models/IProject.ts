@@ -52,4 +52,13 @@ export interface Traitement {
   libelle: string;
   sqlSelect: string;
   sqlInsert: string;
+  resultat: Resultat;
+}
+
+export interface Resultat {
+  succes: number;
+  avertissements: number;
+  erreurs: number;
+  debut: Date;
+  fin: Date;
 }

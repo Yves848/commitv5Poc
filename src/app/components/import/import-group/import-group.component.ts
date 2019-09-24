@@ -12,11 +12,11 @@ export class ImportGroupComponent implements OnInit {
   groupe: Groupes;
 
   traitements: Traitement[] = [];
-  displayedColumns: string[] = ['id', 'libelle'];
+  displayedColumns: string[] = ['id', 'libelle', 'succes', 'avertissements', 'erreurs'];
   constructor() {}
 
   async ngOnInit() {
-    console.log('Groupe', this.groupe.libelleGroupe);
+    console.log('Groupe', this.groupe.traitements);
     this.traitements = this.groupe.traitements;
   }
 }
