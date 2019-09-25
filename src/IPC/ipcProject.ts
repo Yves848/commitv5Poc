@@ -42,7 +42,7 @@ export class IPCProjects {
   }
 
   // Méthodes ....
-  createProjectFile(event: Electron.IpcMainEvent, data: IcreateProject) {
+  async createProjectFile(event: Electron.IpcMainEvent, data: IcreateProject) {
     this.log.info('createProjectFile', data);
     event.reply('progress');
     const module = modulespays.modulesPays.filter(m => {
@@ -76,8 +76,8 @@ export class IPCProjects {
     };
 
     fs.writeFileSync(path.join(`${data.projectName}\\commit.pj4`), JSON.stringify(this.projectFile));
-    this.createProject(event, data.projectName);
-    event.returnValue = path.join(`${data.projectName}`);
+    await this.createProject(event, data.projectName);
+    // event.returnValue = path.join(`${data.projectName}`);
   }
 
   async createProject(event: Electron.IpcMainEvent, directory: string) {

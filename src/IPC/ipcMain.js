@@ -38,6 +38,9 @@ var IpcFiles = /** @class */ (function () {
             var file = electron_1.dialog.showOpenDialogSync(null, options);
             event.returnValue = file[0];
         });
+        electron_1.ipcMain.on('quit', function (event, data) {
+            electron_1.app.quit();
+        });
     };
     return IpcFiles;
 }());

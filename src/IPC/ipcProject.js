@@ -103,32 +103,42 @@ var IPCProjects = /** @class */ (function () {
     };
     // Méthodes ....
     IPCProjects.prototype.createProjectFile = function (event, data) {
-        this.log.info('createProjectFile', data);
-        event.reply('progress');
-        var module = ITypesModules_1.modulespays.modulesPays.filter(function (m) {
-            return m.pays === data.pays;
+        return __awaiter(this, void 0, void 0, function () {
+            var module, moduleImport, moduleTransfert;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.log.info('createProjectFile', data);
+                        event.reply('progress');
+                        module = ITypesModules_1.modulespays.modulesPays.filter(function (m) {
+                            return m.pays === data.pays;
+                        });
+                        moduleImport = module[0].import.filter(function (imp) {
+                            return imp.nom === data.import;
+                        });
+                        moduleTransfert = module[0].transfert.filter(function (trans) {
+                            return trans.nom === data.transfert;
+                        });
+                        this.projectFile = {
+                            informations_generales: {
+                                pays: data.pays,
+                                folder: path.join("" + data.projectName),
+                                module_en_cours: 0,
+                                date_conversion: null,
+                                date_creation: new Date(),
+                                page_en_cours: 0,
+                            },
+                            module_import: __assign({}, moduleImport[0], { date: null, mode: 0, resultats: [], groupes: [] }),
+                            module_transfert: __assign({}, moduleTransfert[0], { date: null, mode: 0, resultats: [], groupes: [] }),
+                        };
+                        fs.writeFileSync(path.join(data.projectName + "\\commit.pj4"), JSON.stringify(this.projectFile));
+                        return [4 /*yield*/, this.createProject(event, data.projectName)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
         });
-        var moduleImport = module[0].import.filter(function (imp) {
-            return imp.nom === data.import;
-        });
-        var moduleTransfert = module[0].transfert.filter(function (trans) {
-            return trans.nom === data.transfert;
-        });
-        this.projectFile = {
-            informations_generales: {
-                pays: data.pays,
-                folder: path.join("" + data.projectName),
-                module_en_cours: 0,
-                date_conversion: null,
-                date_creation: new Date(),
-                page_en_cours: 0,
-            },
-            module_import: __assign({}, moduleImport[0], { date: null, mode: 0, resultats: [], groupes: [] }),
-            module_transfert: __assign({}, moduleTransfert[0], { date: null, mode: 0, resultats: [], groupes: [] }),
-        };
-        fs.writeFileSync(path.join(data.projectName + "\\commit.pj4"), JSON.stringify(this.projectFile));
-        this.createProject(event, data.projectName);
-        event.returnValue = path.join("" + data.projectName);
     };
     IPCProjects.prototype.createProject = function (event, directory) {
         return __awaiter(this, void 0, void 0, function () {

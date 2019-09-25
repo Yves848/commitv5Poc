@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 import { ElectronService } from 'ngx-electron';
 import { ProjectService } from 'src/app/services/project.service';
 import { IcreateProject } from 'src/models/IGeneral';
@@ -22,7 +23,8 @@ export class MenuComponent implements OnInit {
     private els: ElectronService,
     private snack: MatSnackBar,
     private ngZone: NgZone,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private router: Router
   ) {}
 
   newProject(): void {
@@ -53,6 +55,17 @@ export class MenuComponent implements OnInit {
 
   projectLoaded(): boolean {
     return this.projectService.project && this.projectService.project.informations_generales.folder !== '';
+  }
+
+  isImport(): boolean {
+    let isVisible: boolean;
+    // console.log('isImport', this.router.url);
+    isVisible = this.router.url === '/import';
+    return isVisible;
+  }
+
+  closeApp() {
+    this.els.ipcRenderer.send('quit');
   }
 
   projectName(): string {

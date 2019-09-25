@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
   project: ProjectFile;
   messages: string[] = [];
   progress = false;
-  background: any = require('../../../assets/pharmagest.png');
 
   constructor(
     public dialog: MatDialog,
@@ -28,29 +27,31 @@ export class HomeComponent implements OnInit {
     private ngZone: NgZone,
     private projectService: ProjectService,
     private router: Router
-  ) {
-    if (this.els.isElectronApp) {
-      this.els.ipcRenderer.on('progress', (event, data) => {
-        this.progress = !this.progress;
-      });
-
-      this.els.ipcRenderer.on('message', (event, data) => {
-        this.ngZone.run(() => this.messages.push(data.message));
-      });
-
-      this.els.ipcRenderer.on('popup', (event, data) => {
-        console.log(data.message);
-        this.progress = false;
-        // this.ngZone.run(() => this.snack.open(`${data.message}`, 'Info', { duration: 3000, verticalPosition: 'bottom', horizontalPosition: 'left' }));
-        this.ngZone.run(() => {
-          this.snack.openFromComponent(InfoMainComponent, { data: { message: data.message }, duration: 5000, panelClass: 'snack' });
-          this.router.navigateByUrl('/configuration');
-        });
-      });
-    }
-  }
+  ) {}
 
   ngOnInit() {
+    this.els.ipcRenderer.on('progress', (event, data) => {
+      console.log('progress', this.progress);
+      this.ngZone.run(() => {
+        this.progress = !this.progress;
+      });
+    });
+
+    this.els.ipcRenderer.on('message', (event, data) => {
+      console.log('message', data.message);
+      this.ngZone.run(() => {
+        this.messages.push(data.message);
+      });
+    });
+
+    this.els.ipcRenderer.on('popup', (event, data) => {
+      console.log(data.message);
+      this.ngZone.run(() => {
+        this.progress = false;
+        this.snack.openFromComponent(InfoMainComponent, { data: { message: data.message }, duration: 5000, panelClass: 'snack' });
+        this.router.navigateByUrl('/configuration');
+      });
+    });
     this.project = this.projectService.project;
   }
 }

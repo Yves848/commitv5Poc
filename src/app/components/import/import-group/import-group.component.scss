@@ -2,11 +2,15 @@ table {
   width: 100%;
 }
 
+.traitement-row:hover {
+  background: #777;
+}
+
 .mat-column-id {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 8% !important;
-  width: 8% !important;
+  flex: 0 0 4% !important;
+  width: 4% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
 
@@ -32,6 +36,7 @@ table {
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+  text-align: center;
 }
 
 .mat-column-avertissements {
@@ -41,13 +46,14 @@ table {
   width: 8% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
-
+  color: burlywood;
   word-break: break-word;
 
   -ms-hyphens: auto;
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+  text-align: center;
 }
 
 .mat-column-erreurs {
@@ -57,13 +63,15 @@ table {
   width: 8% !important;
   overflow-wrap: break-word;
   word-wrap: break-word;
-
+  color: red;
   word-break: break-word;
 
   -ms-hyphens: auto;
   -moz-hyphens: auto;
   -webkit-hyphens: auto;
   hyphens: auto;
+  text-align: center;
+  font-weight: bold;
 }
 
 .mat-column-libelle {

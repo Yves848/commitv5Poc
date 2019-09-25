@@ -16,7 +16,6 @@ export class ImportGroupComponent implements OnInit {
   constructor() {}
 
   async ngOnInit() {
-    console.log('Groupe', this.groupe.traitements);
     this.traitements = this.groupe.traitements;
   }
 }

@@ -208,7 +208,7 @@ var Project = /** @class */ (function () {
                                     m2 = [];
                                     return [4 /*yield*/, hof_1.asyncForEach(m, function (p) {
                                             var traitements;
-                                            // console.log('groupe', p);
+                                            console.log('groupe', p);
                                             traitements = JSON.parse(fs.readFileSync(_this.C_CHEMIN_BASE + "/modules/" + type + "/" + module + "/" + p.traitements).toString());
                                             m2.push({
                                                 libelleGroupe: p.libelleGroupe,

@@ -1,4 +1,4 @@
-import { BrowserWindow, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 import * as fs from 'fs';
 
 import { chalk, LogBase } from './../utils/output';
@@ -42,6 +42,10 @@ export class IpcFiles {
       };
       const file = dialog.showOpenDialogSync(null, options);
       event.returnValue = file[0];
+    });
+
+    ipcMain.on('quit', (event, data) => {
+      app.quit();
     });
   }
 }

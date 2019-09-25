@@ -2,19 +2,41 @@
   <mat-toolbar-row>
     <span>
       <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-      <button mat-button *ngIf="projectLoaded()" routerLink="/import">Import</button>
-      <button mat-button *ngIf="projectLoaded()">Base Locale</button>
-      <button mat-button *ngIf="projectLoaded()">Transfert</button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="newProject()">Nouveau</button>
-        <button mat-menu-item (click)="openProject()">Ouvrir</button>
+        <button mat-menu-item *ngIf="projectLoaded()" routerLink="/import">Import</button>
+        <button mat-menu-item *ngIf="projectLoaded()">Base Locale</button>
+        <button mat-menu-item *ngIf="projectLoaded()">Transfert</button>
+        <button mat-menu-item *ngIf="!projectLoaded()" (click)="newProject()">Nouveau</button>
+        <button mat-menu-item *ngIf="!projectLoaded()" (click)="openProject()">Ouvrir</button>
         <hr>
         <button mat-menu-item routerLink="/configuration">Configuration</button>
         <hr>
-        <button mat-menu-item>Quitter</button>
+        <button mat-menu-item (click)="closeApp()">Quitter</button>
       </mat-menu>
     </span>
     <span class="spacer"></span>
-    <span>Commit v5 {{projectName()}}</span>
+    <span *ngIf="isImport()">
+      <button class="groupBtn" mat-button *ngIf="projectLoaded()">
+        Médecins
+        <span class="badgeUp">0</span>
+        <span class="badgeDown">0</span>
+      </button>
+      <button class="groupBtn" mat-button *ngIf="projectLoaded()">
+        Clients
+        <span class="badgeUp">0</span>
+        <span class="badgeDown">0</span>
+      </button>
+      <button class="groupBtn" mat-button *ngIf="projectLoaded()">
+        Produits
+        <span class="badgeUp">0</span>
+        <span class="badgeDown">0</span>
+      </button>
+      <button class="groupBtn" mat-button *ngIf="projectLoaded()">
+        Historique
+        <span class="badgeUp">0</span>
+        <span class="badgeDown">0</span>
+      </button>
+    </span>
+    <span class="appliTitle">Commit v5 {{projectName()}}</span>
   </mat-toolbar-row>
 </mat-toolbar>
