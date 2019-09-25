@@ -16,23 +16,23 @@
     </span>
     <span class="spacer"></span>
     <span *ngIf="isImport()">
-      <button class="groupBtn" mat-button *ngIf="projectLoaded()">
+      <button (click)="openGroup('Médecins')" class="groupBtn" mat-button *ngIf="projectLoaded()">
         Médecins
         <span class="badgeUp">0</span>
         <span class="badgeDown">0</span>
       </button>
-      <button class="groupBtn" mat-button *ngIf="projectLoaded()">
+      <button (click)="openGroup('Clients')" class="groupBtn" mat-button *ngIf="projectLoaded()">
         Clients
         <span class="badgeUp">0</span>
         <span class="badgeDown">0</span>
       </button>
-      <button class="groupBtn" mat-button *ngIf="projectLoaded()">
+      <button (click)="openGroup('Produits')" class="groupBtn" mat-button *ngIf="projectLoaded()">
         Produits
         <span class="badgeUp">0</span>
         <span class="badgeDown">0</span>
       </button>
-      <button class="groupBtn" mat-button *ngIf="projectLoaded()">
-        Historique
+      <button (click)="openGroup('Historiques')" class="groupBtn" mat-button *ngIf="projectLoaded()">
+        Historiques
         <span class="badgeUp">0</span>
         <span class="badgeDown">0</span>
       </button>

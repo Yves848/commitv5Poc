@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/services/project.service';
 
 import { Groupes } from './../../../models/IProject';
+import { GroupsServiceService } from './../../services/groups-service.service';
 
 @Component({
   selector: 'app-import',
@@ -11,16 +12,26 @@ import { Groupes } from './../../../models/IProject';
 export class ImportComponent implements OnInit {
   modulesImport: Groupes[];
   traitements: string[];
-  constructor(private projectService: ProjectService) {}
+  constructor(private projectService: ProjectService, private groupsService: GroupsServiceService) {}
 
   ngOnInit() {
     this.modulesImport = this.projectService.project.module_import.groupes;
+    this.groupsService.resetGroups();
     this.projectService.project.module_import.groupes.forEach(groupe => {
-      console.log('groupe - libelle', groupe.libelleGroupe);
-      groupe.traitements.forEach(traitement => {
-        console.log('   traitements', traitement.libelle);
-      });
+      this.groupsService.addGroup(groupe.libelleGroupe);
     });
+
+    /* this.groupsService.changeOpen.subscribe((groups: Groups[]) => {
+      groups.forEach(group => {
+        console.log(group.libelle, group.isOpen);
+      });
+    }); */
+  }
+
+  isOpen(group: string): boolean {
+    const o = this.groupsService.isOpen(group);
+    console.log(`app-import isOpen ${group}`, o);
+    return o;
   }
 
   folderName() {
