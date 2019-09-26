@@ -49,8 +49,10 @@ export class MenuComponent implements OnInit {
   openProject(): void {
     let projectName = '';
     projectName = this.els.ipcRenderer.sendSync('browse-folder', { path: this.createProject.folderName });
-    this.projectService.project = this.els.ipcRenderer.sendSync('open-project', projectName);
-    this.modulesImport = this.projectService.project.module_import.groupes;
+    if (projectName && projectName !== '') {
+      this.projectService.project = this.els.ipcRenderer.sendSync('open-project', projectName);
+      this.modulesImport = this.projectService.project.module_import.groupes;
+    }
   }
 
   projectLoaded(): boolean {

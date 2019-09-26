@@ -10,19 +10,19 @@ import { NgxElectronModule } from 'ngx-electron';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AproposComponent } from './components/apropos/apropos.component';
+import { ConfigurationComponent } from './components/configuration/configuration.component';
 import { FichiersComponent } from './components/fichiers/fichiers.component';
+import { GroupButtonComponent } from './components/group-button/group-button.component';
 import { HomeComponent } from './components/home/home.component';
 import { NewDialogComponent } from './components/home/new-dialog/new-dialog.component';
+import { ImportGroupComponent } from './components/import/import-group/import-group.component';
+import { ImportComponent } from './components/import/import.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ProjetComponent } from './components/projet/projet.component';
 import { InfoMainComponent } from './components/snackbar/info-main/info-main.component';
 import { TemplateComponent } from './components/snackbar/infoMain/template/template.component';
 import { TestComponent } from './components/test/test.component';
 import { GlobalMaterialModuleModule } from './global-material-module/global-material-module.module';
-import { ImportComponent } from './components/import/import.component';
-import { ConfigurationComponent } from './components/configuration/configuration.component';
-import { ImportGroupComponent } from './components/import/import-group/import-group.component';
-import { GroupButtonComponent } from './components/group-button/group-button.component';
 
 @NgModule({
   declarations: [

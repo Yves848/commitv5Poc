@@ -36,7 +36,12 @@ var IpcFiles = /** @class */ (function () {
                 properties: ['createDirectory', 'openDirectory'],
             };
             var file = electron_1.dialog.showOpenDialogSync(null, options);
-            event.returnValue = file[0];
+            if (file) {
+                event.returnValue = file[0];
+            }
+            else {
+                event.returnValue = undefined;
+            }
         });
         electron_1.ipcMain.on('quit', function (event, data) {
             electron_1.app.quit();

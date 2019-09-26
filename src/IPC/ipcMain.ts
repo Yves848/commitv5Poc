@@ -26,7 +26,6 @@ export class IpcFiles {
       const path = data;
       fs.readdir(path, (err, files) => {
         files.forEach(file => {
-          // this.log.info(file);
           event.reply('new-file', file);
         });
       });
@@ -41,7 +40,11 @@ export class IpcFiles {
         properties: ['createDirectory', 'openDirectory'],
       };
       const file = dialog.showOpenDialogSync(null, options);
-      event.returnValue = file[0];
+      if (file) {
+        event.returnValue = file[0];
+      } else {
+        event.returnValue = undefined;
+      }
     });
 
     ipcMain.on('quit', (event, data) => {
