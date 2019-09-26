@@ -30,6 +30,17 @@ export class IPCProjects {
       this.log.info('open-project - senderId', event.sender.id);
       await this.openProject(event, data);
     });
+
+    ipcMain.on('table-list', async (event: Electron.IpcMainEvent, data) => {
+      await this.getTableList(event);
+    });
+  }
+
+  async getTableList(event: Electron.IpcMainEvent) {
+    const tableList: string[] = [];
+    if (this.project) {
+      event.returnValue = await this.project.getTables();
+    }
   }
 
   async openProject(event: Electron.IpcMainEvent, data: string) {

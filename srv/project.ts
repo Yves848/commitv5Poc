@@ -13,6 +13,7 @@ export class Project {
   C_CHEMIN_BASE: string;
   C_CHEMIN_BASE_SCRIPT_SQL: string;
   C_OPTIONS_PHA: OptionsPHA;
+  directory: string;
   log: LogBase;
   m: Module;
 
@@ -143,6 +144,48 @@ export class Project {
     });
   }
 
+  async openDB(options) {
+    return new Promise<firebird.Database>(async (resolve, reject) => {
+      firebird.attach(options, (err, db) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(db);
+      });
+    });
+  }
+
+  async execQuery(db: firebird.Database, query: string) {
+    return new Promise<any[]>(async (resolve, reject) => {
+      db.query(query, [], (err, res) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(res);
+      });
+    });
+  }
+
+  async getTables() {
+    return new Promise<any[]>(async (resolve, reject) => {
+      const pha: OptionsPHA = { ...this.C_OPTIONS_PHA };
+      pha.database = `${this.directory}${pha.database}`;
+      const db = await this.openDB(pha);
+      let query = `select rdb$relation_name
+                    from rdb$relations
+                    where rdb$view_blr is null
+                    and (rdb$system_flag is null or rdb$system_flag = 0)`;
+      const tables = this.execQuery(db, query);
+      query = `select rdb$relation_name
+                    from rdb$relations
+                    where rdb$view_blr is null
+                    and (rdb$system_flag is null or rdb$system_flag = 0)`;
+      // const views = this.execQuery(db, query);
+
+      resolve(tables);
+    });
+  }
+
   async open(directory: string) {
     return new Promise<OptionsPHA>(async (resolve, reject) => {
       const pha: OptionsPHA = { ...this.C_OPTIONS_PHA };
@@ -154,6 +197,7 @@ export class Project {
         pha.commit.module_transfert.groupes = await this.getTreatments('transfert', pha.commit.module_transfert.nom);
         pha.commit.informations_generales.folder = directory;
         this.log.info('Pha Loaded');
+        this.directory = directory;
         resolve(pha);
       } catch (error) {
         reject(error);

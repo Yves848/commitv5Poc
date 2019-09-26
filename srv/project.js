@@ -291,6 +291,68 @@ var Project = /** @class */ (function () {
             });
         });
     };
+    Project.prototype.openDB = function (options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            firebird.attach(options, function (err, db) {
+                                if (err) {
+                                    reject(err);
+                                }
+                                resolve(db);
+                            });
+                            return [2 /*return*/];
+                        });
+                    }); })];
+            });
+        });
+    };
+    Project.prototype.execQuery = function (db, query) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            db.query(query, [], function (err, res) {
+                                if (err) {
+                                    reject(err);
+                                }
+                                resolve(res);
+                            });
+                            return [2 /*return*/];
+                        });
+                    }); })];
+            });
+        });
+    };
+    Project.prototype.getTables = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
+                        var pha, db, query, rows;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0:
+                                    pha = __assign({}, this.C_OPTIONS_PHA);
+                                    pha.database = "" + this.directory + pha.database;
+                                    this.log.log('getTables - pha', pha);
+                                    return [4 /*yield*/, this.openDB(pha)];
+                                case 1:
+                                    db = _a.sent();
+                                    this.log.log('getTables - db', db);
+                                    query = "select rdb$relation_name\n                    from rdb$relations\n                    where rdb$view_blr is null\n                    and (rdb$system_flag is null or rdb$system_flag = 0)";
+                                    rows = this.execQuery(db, query);
+                                    resolve(rows);
+                                    return [2 /*return*/];
+                            }
+                        });
+                    }); })];
+            });
+        });
+    };
     Project.prototype.open = function (directory) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
@@ -317,6 +379,7 @@ var Project = /** @class */ (function () {
                                     _b.groupes = _c.sent();
                                     pha.commit.informations_generales.folder = directory;
                                     this.log.info('Pha Loaded');
+                                    this.directory = directory;
                                     resolve(pha);
                                     return [3 /*break*/, 5];
                                 case 4:

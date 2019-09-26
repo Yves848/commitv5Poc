@@ -5,10 +5,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { NgxElectronModule } from 'ngx-electron';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { RequeteurComponent } from './component/requeteur/requeteur.component';
 import { AproposComponent } from './components/apropos/apropos.component';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
 import { FichiersComponent } from './components/fichiers/fichiers.component';
@@ -40,6 +42,7 @@ import { GlobalMaterialModuleModule } from './global-material-module/global-mate
     ConfigurationComponent,
     ImportGroupComponent,
     GroupButtonComponent,
+    RequeteurComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +54,7 @@ import { GlobalMaterialModuleModule } from './global-material-module/global-mate
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    CodemirrorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

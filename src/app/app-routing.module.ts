@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { RequeteurComponent } from './component/requeteur/requeteur.component';
 import { AproposComponent } from './components/apropos/apropos.component';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
 import { FichiersComponent } from './components/fichiers/fichiers.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'apropos', component: AproposComponent },
   { path: 'import', component: ImportComponent },
   { path: 'configuration', component: ConfigurationComponent },
+  { path: 'requeteur', component: RequeteurComponent },
 ];
 
 @NgModule({

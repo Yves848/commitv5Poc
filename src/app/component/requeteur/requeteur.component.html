@@ -1,0 +1,23 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <span>Requêteur</span>
+    <span class="spacer"></span>
+    <mat-icon>play_arrow</mat-icon>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div id="container">
+  <div id="tables">
+    <ul>
+      <li *ngFor="let table of tables">{{ table['RDB$RELATION_NAME'] }}</li>
+    </ul>
+
+  </div>
+  <div id="requeteur">
+    <ngx-codemirror [(ngModel)]="content" [options]="{
+        lineNumbers: true,
+        theme: 'material',
+        mode: 'sql'
+      }">
+    </ngx-codemirror>
+  </div>
+</div>

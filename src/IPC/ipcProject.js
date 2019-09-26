@@ -81,6 +81,34 @@ var IPCProjects = /** @class */ (function () {
                 }
             });
         }); });
+        electron_1.ipcMain.on('table-list', function (event, data) { return __awaiter(_this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getTableList(event)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        }); });
+    };
+    IPCProjects.prototype.getTableList = function (event) {
+        return __awaiter(this, void 0, void 0, function () {
+            var tableList, _a;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        tableList = [];
+                        if (!this.project) return [3 /*break*/, 2];
+                        _a = event;
+                        return [4 /*yield*/, this.project.getTables()];
+                    case 1:
+                        _a.returnValue = _b.sent();
+                        _b.label = 2;
+                    case 2: return [2 /*return*/];
+                }
+            });
+        });
     };
     IPCProjects.prototype.openProject = function (event, data) {
         return __awaiter(this, void 0, void 0, function () {
