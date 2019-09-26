@@ -5,6 +5,7 @@ import { ElectronService } from 'ngx-electron';
 import { ProjectService } from 'src/app/services/project.service';
 import { IcreateProject } from 'src/models/IGeneral';
 
+import { Groupes } from './../../../models/IProject';
 import { GroupsServiceService } from './../../services/groups-service.service';
 import { NewDialogComponent } from './../home/new-dialog/new-dialog.component';
 
@@ -16,7 +17,7 @@ import { NewDialogComponent } from './../home/new-dialog/new-dialog.component';
 export class MenuComponent implements OnInit {
   nom: string;
   createProject: IcreateProject;
-
+  modulesImport: Groupes[];
   messages: string[] = [];
 
   constructor(
@@ -48,9 +49,8 @@ export class MenuComponent implements OnInit {
   openProject(): void {
     let projectName = '';
     projectName = this.els.ipcRenderer.sendSync('browse-folder', { path: this.createProject.folderName });
-    console.log('openProject - projectName ', projectName);
     this.projectService.project = this.els.ipcRenderer.sendSync('open-project', projectName);
-    console.log('openProject - this.project', this.projectService.project.informations_generales);
+    this.modulesImport = this.projectService.project.module_import.groupes;
   }
 
   projectLoaded(): boolean {
@@ -58,14 +58,11 @@ export class MenuComponent implements OnInit {
   }
 
   openGroup(group: string) {
-    console.log('openGroup', group);
     this.groupsService.toggle(group);
   }
 
   isImport(): boolean {
-    let isVisible: boolean;
-    isVisible = this.router.url === '/import';
-    return isVisible;
+    return this.router.url === '/import';
   }
 
   closeApp() {
@@ -85,5 +82,8 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.createProject = this.projectService.initProject();
+    if (this.projectLoaded()) {
+      this.modulesImport = this.projectService.project.module_import.groupes;
+    }
   }
 }

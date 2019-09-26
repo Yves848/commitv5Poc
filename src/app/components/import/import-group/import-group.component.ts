@@ -20,6 +20,10 @@ export class ImportGroupComponent implements OnInit {
   displayedColumns: string[] = ['action', 'id', 'libelle', 'succes', 'avertissements', 'erreurs'];
   constructor(private els: ElectronService, private groupsService: GroupsServiceService, private ngZone: NgZone) {}
 
+  switchToggle(group: string, isOpen: boolean) {
+    this.groupsService.switchToggle(group, isOpen);
+  }
+
   async ngOnInit() {
     this.traitements = this.groupe.traitements;
     this.groupsService.changeOpen.subscribe(async (groups: Groups[]) => {

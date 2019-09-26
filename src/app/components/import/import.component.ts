@@ -11,7 +11,7 @@ import { GroupsServiceService } from './../../services/groups-service.service';
 })
 export class ImportComponent implements OnInit {
   modulesImport: Groupes[];
-  traitements: string[];
+  // traitements: string[];
   constructor(private projectService: ProjectService, private groupsService: GroupsServiceService) {}
 
   ngOnInit() {

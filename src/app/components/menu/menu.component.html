@@ -16,26 +16,10 @@
     </span>
     <span class="spacer"></span>
     <span *ngIf="isImport()">
-      <button (click)="openGroup('Médecins')" class="groupBtn" mat-button *ngIf="projectLoaded()">
-        Médecins
-        <span class="badgeUp">0</span>
-        <span class="badgeDown">0</span>
-      </button>
-      <button (click)="openGroup('Clients')" class="groupBtn" mat-button *ngIf="projectLoaded()">
-        Clients
-        <span class="badgeUp">0</span>
-        <span class="badgeDown">0</span>
-      </button>
-      <button (click)="openGroup('Produits')" class="groupBtn" mat-button *ngIf="projectLoaded()">
-        Produits
-        <span class="badgeUp">0</span>
-        <span class="badgeDown">0</span>
-      </button>
-      <button (click)="openGroup('Historiques')" class="groupBtn" mat-button *ngIf="projectLoaded()">
-        Historiques
-        <span class="badgeUp">0</span>
-        <span class="badgeDown">0</span>
-      </button>
+      <div *ngIf="projectLoaded()">
+        <app-group-button *ngFor="let module of modulesImport" (click)="openGroup(module.libelleGroupe)"
+          [name]="module.libelleGroupe"></app-group-button>
+      </div>
     </span>
     <span class="appliTitle">Commit v5 {{projectName()}}</span>
   </mat-toolbar-row>

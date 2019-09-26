@@ -15,6 +15,8 @@ export class GroupsServiceService {
     this.groups.filter(g => {
       if (g.libelle === groupName) {
         g.isOpen = !g.isOpen;
+      } else {
+        g.isOpen = false;
       }
     });
     this.changeOpen.emit(this.groups);
@@ -34,6 +36,14 @@ export class GroupsServiceService {
     });
 
     return o;
+  }
+
+  switchToggle(group: string, isOpen: boolean) {
+    this.groups.filter(g => {
+      if (g.libelle === group) {
+        g.isOpen = isOpen;
+      }
+    });
   }
 
   addGroup(group: string) {

@@ -22,6 +22,7 @@ import { GlobalMaterialModuleModule } from './global-material-module/global-mate
 import { ImportComponent } from './components/import/import.component';
 import { ConfigurationComponent } from './components/configuration/configuration.component';
 import { ImportGroupComponent } from './components/import/import-group/import-group.component';
+import { GroupButtonComponent } from './components/group-button/group-button.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { ImportGroupComponent } from './components/import/import-group/import-gr
     ImportComponent,
     ConfigurationComponent,
     ImportGroupComponent,
+    GroupButtonComponent,
   ],
   imports: [
     BrowserModule,
