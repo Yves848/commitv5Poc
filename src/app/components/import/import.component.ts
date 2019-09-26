@@ -20,12 +20,6 @@ export class ImportComponent implements OnInit {
     this.projectService.project.module_import.groupes.forEach(groupe => {
       this.groupsService.addGroup(groupe.libelleGroupe);
     });
-
-    /* this.groupsService.changeOpen.subscribe((groups: Groups[]) => {
-      groups.forEach(group => {
-        console.log(group.libelle, group.isOpen);
-      });
-    }); */
   }
 
   isOpen(group: string): boolean {

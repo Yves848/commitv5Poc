@@ -13,7 +13,9 @@ export class GroupsServiceService {
   toggle(groupName) {
     console.log('toggle', groupName);
     this.groups.filter(g => {
-      g.isOpen = g.libelle === groupName;
+      if (g.libelle === groupName) {
+        g.isOpen = !g.isOpen;
+      }
     });
     this.changeOpen.emit(this.groups);
   }

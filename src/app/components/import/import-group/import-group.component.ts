@@ -17,30 +17,18 @@ export class ImportGroupComponent implements OnInit {
   isOpen = false;
 
   traitements: Traitement[] = [];
-  displayedColumns: string[] = ['id', 'libelle', 'succes', 'avertissements', 'erreurs'];
+  displayedColumns: string[] = ['action', 'id', 'libelle', 'succes', 'avertissements', 'erreurs'];
   constructor(private els: ElectronService, private groupsService: GroupsServiceService, private ngZone: NgZone) {}
 
   async ngOnInit() {
     this.traitements = this.groupe.traitements;
     this.groupsService.changeOpen.subscribe(async (groups: Groups[]) => {
-      console.log('changeOpen', this.groupe.libelleGroupe);
       groups.forEach(g => {
         if (g.libelle === this.groupe.libelleGroupe) {
           this.isOpen = this.groupsService.isOpen(g.libelle);
+          console.log('changeOpen', this.groupe.libelleGroupe, this.isOpen);
         }
       });
-      /* await asyncForEach(groups, (group: Groups) => {
-        if (group.libelle === this.groupe.libelleGroupe) {
-          console.log('group', group.libelle, group.isOpen);
-          this.ngZone.run(() => {
-            this.isOpen = group.isOpen;
-          });
-        } else {
-          this.ngZone.run(() => {
-            this.isOpen = false;
-          });
-        }
-      }); */
     });
     console.log('app-import-group isOpen', this.isOpen);
   }

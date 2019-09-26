@@ -3,6 +3,12 @@
     {{ groupe.libelleGroupe }}
   </mat-expansion-panel-header>
   <table mat-table [dataSource]="traitements">
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Importer</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-slide-toggle color="warn"></mat-slide-toggle>
+      </td>
+    </ng-container>
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef>No.</th>
       <td mat-cell *matCellDef="let index = index">{{ index + 1 }}</td>
