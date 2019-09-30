@@ -4,17 +4,17 @@
 
 #container {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto;
-  grid-template-areas: "tables tables tables requeteur requeteur requeteur requeteur requeteur requeteur requeteur requeteur requeteur"
-    "tables tables tables requeteur requeteur requeteur requeteur requeteur requeteur requeteur requeteur requeteur"
-    "tables tables tables requeteur requeteur requeteur requeteur requeteur requeteur requeteur requeteur requeteur"
+  column-gap: 5px;
+  grid-template-columns: 2fr 8fr;
+  grid-auto-rows: 1fr;
 }
 
 #tables {
-  grid-area: tables
+  grid-column: 1;
+  border: 1px solid red;
 }
 
 #requeteur {
-  grid-area: requeteur;
+  grid-column: 2;
+  border: 1px solid green;
 }

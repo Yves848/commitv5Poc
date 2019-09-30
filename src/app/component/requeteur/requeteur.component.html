@@ -2,7 +2,11 @@
   <mat-toolbar-row>
     <span>Requêteur</span>
     <span class="spacer"></span>
-    <mat-icon>play_arrow</mat-icon>
+    <mat-button (click)="execQuery()">
+      <mat-icon>play_arrow</mat-icon>
+
+    </mat-button>
+
   </mat-toolbar-row>
 </mat-toolbar>
 <div id="container">

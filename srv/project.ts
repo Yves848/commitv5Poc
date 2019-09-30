@@ -175,14 +175,13 @@ export class Project {
                     from rdb$relations
                     where rdb$view_blr is null
                     and (rdb$system_flag is null or rdb$system_flag = 0)`;
-      const tables = this.execQuery(db, query);
+      const tables = await this.execQuery(db, query);
       query = `select rdb$relation_name
                     from rdb$relations
-                    where rdb$view_blr is null
+                    where rdb$view_blr is not null
                     and (rdb$system_flag is null or rdb$system_flag = 0)`;
-      // const views = this.execQuery(db, query);
-
-      resolve(tables);
+      const views = await this.execQuery(db, query);
+      resolve([...tables, ...views]);
     });
   }
 

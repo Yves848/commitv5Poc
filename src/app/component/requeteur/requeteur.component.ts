@@ -15,6 +15,9 @@ export class RequeteurComponent implements OnInit {
   tables: string[];
   constructor(private projectService: ProjectService, private els: ElectronService) {}
 
+  execQuery() {
+    console.log(this.content);
+  }
   async ngOnInit() {
     if (this.projectService.project) {
       this.tables = this.els.ipcRenderer.sendSync('table-list');

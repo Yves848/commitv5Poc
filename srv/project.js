@@ -332,20 +332,24 @@ var Project = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 return [2 /*return*/, new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
-                        var pha, db, query, rows;
+                        var pha, db, query, tables, views;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
                                     pha = __assign({}, this.C_OPTIONS_PHA);
                                     pha.database = "" + this.directory + pha.database;
-                                    this.log.log('getTables - pha', pha);
                                     return [4 /*yield*/, this.openDB(pha)];
                                 case 1:
                                     db = _a.sent();
-                                    this.log.log('getTables - db', db);
                                     query = "select rdb$relation_name\n                    from rdb$relations\n                    where rdb$view_blr is null\n                    and (rdb$system_flag is null or rdb$system_flag = 0)";
-                                    rows = this.execQuery(db, query);
-                                    resolve(rows);
+                                    return [4 /*yield*/, this.execQuery(db, query)];
+                                case 2:
+                                    tables = _a.sent();
+                                    query = "select rdb$relation_name\n                    from rdb$relations\n                    where rdb$view_blr is not null\n                    and (rdb$system_flag is null or rdb$system_flag = 0)";
+                                    return [4 /*yield*/, this.execQuery(db, query)];
+                                case 3:
+                                    views = _a.sent();
+                                    resolve(tables.concat(views));
                                     return [2 /*return*/];
                             }
                         });
