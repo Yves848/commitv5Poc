@@ -42,7 +42,7 @@
     "lodash": "^4.17.15",
     "minimist": "^1.2.0",
     "mocha": "^6.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "ngx-electron": "^2.1.1",
     "node-adodb": "^5.0.2",
     "node-firebird": "^0.8.6",
