@@ -66,7 +66,7 @@
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^8.2.0",
-    "@angular-devkit/build-angular": "^0.800.0",
+    "@angular-devkit/build-angular": "^15.0.4",
     "@angular/compiler-cli": "^8.0.1",
     "@angular/language-service": "^8.0.1",
     "@types/fs-extra": "^8.0.0",
